@@ -1,1 +1,1 @@
-# Curriculum
+# Schedule Proj using Spring
