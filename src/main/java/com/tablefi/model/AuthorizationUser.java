@@ -7,6 +7,11 @@ public class AuthorizationUser {
     private String login;
     private byte[] password;
 
+    public AuthorizationUser(String login, byte[] password) {
+        this.login = login;
+        this.password = password;
+    }
+
     public String getLogin() {
         return login;
     }

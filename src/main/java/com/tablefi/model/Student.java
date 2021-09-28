@@ -1,5 +1,6 @@
 package com.tablefi.model;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class Student implements User{

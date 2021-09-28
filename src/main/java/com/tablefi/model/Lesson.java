@@ -1,5 +1,6 @@
 package com.tablefi.model;
 
+
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
