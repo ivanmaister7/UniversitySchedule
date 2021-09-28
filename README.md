@@ -1,3 +1,6 @@
+# Github repo:
+https://github.com/NaUKMASpringScheduleProj/Schedule
+
 # Schedule Proj using Spring
 
 GET
