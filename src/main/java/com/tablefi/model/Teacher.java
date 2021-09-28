@@ -1,6 +1,10 @@
 package com.tablefi.model;
 
-public class Teacher extends User {
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class Teacher implements User {
+
+    private Table table;
     public int teacherId;
     public String name;
     public String faculty;
@@ -62,5 +66,20 @@ public class Teacher extends User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Autowired
+    public void setTable(Table table) {
+        this.table = table;
+    }
+
+    @Override
+    public void showDaySchedule() {
+
+    }
+
+    @Override
+    public void showWeekSchedule() {
+
     }
 }

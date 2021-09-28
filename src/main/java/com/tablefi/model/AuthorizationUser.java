@@ -1,5 +1,8 @@
 package com.tablefi.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class AuthorizationUser {
     private String login;
     private byte[] password;

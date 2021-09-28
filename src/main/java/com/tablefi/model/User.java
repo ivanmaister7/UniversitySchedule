@@ -1,5 +1,7 @@
 package com.tablefi.model;
 
-public abstract class User {
+public interface User {
 
+    void showDaySchedule();
+    void showWeekSchedule();
 }

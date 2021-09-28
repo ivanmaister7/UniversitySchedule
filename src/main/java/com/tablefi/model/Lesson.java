@@ -1,9 +1,13 @@
 package com.tablefi.model;
 
+
+import org.springframework.stereotype.Component;
+
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+@Component
 public class Lesson {
     private int lessonId;
     private String name;
@@ -12,13 +16,13 @@ public class Lesson {
     private ArrayList<Integer> weeks;
     private int group;
 
-    public Lesson(String name, DayOfWeek dayOfWeek, LocalTime time, ArrayList<Integer> weeks, int group) {
-        this.name = name;
-        this.dayOfWeek = dayOfWeek;
-        this.time = time;
-        this.weeks = weeks;
-        this.group = group;
-    }
+//    public Lesson(String name, DayOfWeek dayOfWeek, LocalTime time, ArrayList<Integer> weeks, int group) {
+//        this.name = name;
+//        this.dayOfWeek = dayOfWeek;
+//        this.time = time;
+//        this.weeks = weeks;
+//        this.group = group;
+//    }
 
     public int getLessonId() {
         return lessonId;
