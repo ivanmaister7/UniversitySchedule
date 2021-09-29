@@ -1,31 +1,32 @@
-package com.tablefi.model;
+package com.schedule.proj.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class Teacher implements User {
+public class Student implements User{
 
     private Table table;
-    public int teacherId;
-    public String name;
-    public String faculty;
-    public String cathedra;
-    public String rank;
-    public String email;
+    private int studentId;
+    private String name;
+    private String faculty;
+    private String speciality;
+    private int year;
+    // the same as login
+    private String email;
 
-    public Teacher(String name, String faculty, String cathedra, String rank, String email) {
+    public Student(String name, String faculty, String speciality, int year, String email) {
         this.name = name;
         this.faculty = faculty;
-        this.cathedra = cathedra;
-        this.rank = rank;
+        this.speciality = speciality;
+        this.year = year;
         this.email = email;
     }
 
-    public int getTeacherId() {
-        return teacherId;
+    public int getStudentId() {
+        return studentId;
     }
 
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
     }
 
     public String getName() {
@@ -44,20 +45,20 @@ public class Teacher implements User {
         this.faculty = faculty;
     }
 
-    public String getCathedra() {
-        return cathedra;
+    public String getSpeciality() {
+        return speciality;
     }
 
-    public void setCathedra(String cathedra) {
-        this.cathedra = cathedra;
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
     }
 
-    public String getRank() {
-        return rank;
+    public int getYear() {
+        return year;
     }
 
-    public void setRank(String rank) {
-        this.rank = rank;
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public String getEmail() {

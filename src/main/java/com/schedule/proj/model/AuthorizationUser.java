@@ -1,4 +1,4 @@
-package com.tablefi.model;
+package com.schedule.proj.model;
 
 import org.springframework.stereotype.Component;
 
@@ -6,11 +6,6 @@ import org.springframework.stereotype.Component;
 public class AuthorizationUser {
     private String login;
     private byte[] password;
-
-    public AuthorizationUser(String login, byte[] password) {
-        this.login = login;
-        this.password = password;
-    }
 
     public String getLogin() {
         return login;
