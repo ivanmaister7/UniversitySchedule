@@ -7,15 +7,15 @@ import java.util.List;
 
 @Component
 public class Table {
-    List<Lesson> lessonList;
+    List<Subject> lessonList;
 
     @Autowired
-    public Table(List<Lesson> lessonList) {
+    public Table(List<Subject> lessonList) {
         this.lessonList = lessonList;
     }
 
-//    @Autowired
-//    public void setLessonList(List<Lesson> lessonList) {
-//        this.lessonList = lessonList;
-//    }
+    @Autowired
+   public void setLessonList(List<Subject> lessonList) {
+        this.lessonList = lessonList;
+   }
 }

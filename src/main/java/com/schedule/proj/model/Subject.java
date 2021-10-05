@@ -1,5 +1,7 @@
 package com.schedule.proj.model;
 
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
@@ -7,7 +9,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 @Component
-public class Lesson {
+@Data
+public class Subject {
     private int lessonId;
     private String name;
     private DayOfWeek dayOfWeek;
