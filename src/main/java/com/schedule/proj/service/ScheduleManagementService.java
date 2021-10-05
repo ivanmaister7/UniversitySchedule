@@ -1,4 +1,5 @@
-package com.tablefi.service;
+package com.schedule.proj.service;
+
 
 public class ScheduleManagementService {
 }
