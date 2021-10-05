@@ -1,4 +1,4 @@
-package com.tablefi.model;
+package com.schedule.proj.model;
 
 public interface User {
 

@@ -1,5 +1,4 @@
-package com.tablefi.model;
-
+package com.schedule.proj.model;
 
 import org.springframework.stereotype.Component;
 
