@@ -1,86 +1,63 @@
 package com.schedule.proj.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-public class Student implements User{
+import javax.persistence.*;
+import javax.persistence.Table;
 
-    private Table table;
-    private int studentId;
-    private String name;
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
+@Entity
+@Table(name = "Student")
+public class Student {
+
+    @Id
+    private int id;
+
     private String faculty;
+
     private String speciality;
     private int year;
-    // the same as login
-    private String email;
 
-    public Student(String name, String faculty, String speciality, int year, String email) {
-        this.name = name;
+    public Student(String faculty, String speciality, int year) {
         this.faculty = faculty;
         this.speciality = speciality;
         this.year = year;
-        this.email = email;
     }
 
-    public int getStudentId() {
-        return studentId;
-    }
+    public Student() {
 
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getFaculty() {
-        return faculty;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setFaculty(String faculty) {
         this.faculty = faculty;
     }
 
-    public String getSpeciality() {
-        return speciality;
-    }
-
     public void setSpeciality(String speciality) {
         this.speciality = speciality;
-    }
-
-    public int getYear() {
-        return year;
     }
 
     public void setYear(int year) {
         this.year = year;
     }
 
-    public String getEmail() {
-        return email;
+
+
+    public int getId() {
+        return id;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getFaculty() {
+        return faculty;
     }
 
-    @Autowired
-    public void setTable(Table table) {
-        this.table = table;
+    public String getSpeciality() {
+        return speciality;
     }
 
-    @Override
-    public void showDaySchedule() {
-
-    }
-
-    @Override
-    public void showWeekSchedule() {
-
+    public int getYear() {
+        return year;
     }
 }
