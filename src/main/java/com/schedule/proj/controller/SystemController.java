@@ -2,7 +2,6 @@ package com.schedule.proj.controller;
 
 
 import com.schedule.proj.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import repository.AccountRepository;
@@ -12,7 +11,6 @@ import repository.AccountRepository;
 public class SystemController {
 
 
-    @Autowired
     private  final AccountRepository accountRepository;
 
     public SystemController(AccountRepository accountRepository) {
@@ -23,8 +21,8 @@ public class SystemController {
 
        try {
             int NUMBER_ADMINS = 1;
-            int NUMBER_TEACHER = 3;
-            int NUMBER_STUDENTS = 15;
+            int NUMBER_TEACHER = 10;
+            int NUMBER_STUDENTS = 150;
 
             createAdmin(NUMBER_ADMINS);
             createTeacher(NUMBER_TEACHER);

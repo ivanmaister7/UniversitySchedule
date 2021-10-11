@@ -25,7 +25,7 @@ public class TeacherService {
 
     }
 
-    //select all mentor
+
     public Optional<User> getFullInfoAllTeacher(){
 
         int theMentors = userRepository.findByRole(Role.TEACHER).size();
