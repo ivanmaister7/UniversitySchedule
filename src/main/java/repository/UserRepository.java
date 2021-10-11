@@ -8,18 +8,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
 
-
-
-
     @Query("Select user from User user")
     List<User> findAll();
-
-
     Collection<Object> findByRole(Role teacher);
+
+    User findOneById(int userId);
 }
