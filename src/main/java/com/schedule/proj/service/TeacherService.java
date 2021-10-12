@@ -5,8 +5,8 @@ import com.schedule.proj.model.Role;
 import org.apache.tomcat.jni.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import repository.TeacherRepository;
-import repository.UserRepository;
+import com.schedule.proj.repository.TeacherRepository;
+import com.schedule.proj.repository.UserRepository;
 
 
 import java.util.Optional;
@@ -25,7 +25,7 @@ public class TeacherService {
 
     }
 
-    //select all mentor
+
     public Optional<User> getFullInfoAllTeacher(){
 
         int theMentors = userRepository.findByRole(Role.TEACHER).size();
