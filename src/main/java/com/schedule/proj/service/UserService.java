@@ -4,7 +4,7 @@ import com.schedule.proj.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
-import repository.UserRepository;
+import com.schedule.proj.repository.UserRepository;
 import java.util.List;
 
 @Service

@@ -1,4 +1,4 @@
-package repository;
+package com.schedule.proj.repository;
 
 import com.schedule.proj.model.Role;
 import com.schedule.proj.model.User;

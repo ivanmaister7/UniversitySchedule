@@ -2,10 +2,9 @@ package com.schedule.proj.controller;
 
 
 import com.schedule.proj.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import repository.AccountRepository;
+import com.schedule.proj.repository.AccountRepository;
 
 
 @RestController

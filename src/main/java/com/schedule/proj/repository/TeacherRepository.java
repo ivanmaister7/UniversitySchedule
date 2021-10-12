@@ -1,4 +1,4 @@
-package repository;
+package com.schedule.proj.repository;
 
 
 import org.apache.tomcat.jni.User;
