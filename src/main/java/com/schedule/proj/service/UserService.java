@@ -12,8 +12,8 @@ public class UserService {
 
     @Autowired
     ApplicationEventPublisher applicationEventPublisher;
-
     UserRepository userRepository;
+
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }

@@ -14,16 +14,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-@Autowired
-UserService userService;
+
+    @Autowired
+    UserService userService;
     UserRepository userRepository;
 
-
-    public UserController(UserService userService, UserRepository userRepository) {
-        this.userService = userService;
-        this.userRepository = userRepository;
-
-    }
 
     //select all accounts
     @Operation(summary = "select all users")
