@@ -7,10 +7,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+
+import java.util.Arrays;
 
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
-public class ProjApplication implements CommandLineRunner {
+@ComponentScan("com.schedule.proj.repository")
+public class ProjApplication implements CommandLineRunner{
+
     @Autowired
     MyBean myBean;
 
@@ -19,7 +25,7 @@ public class ProjApplication implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... strings) throws Exception  {
         myBean.showBean();
     }
 
