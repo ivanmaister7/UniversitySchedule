@@ -10,7 +10,6 @@ import java.util.Optional;
 
 
 @Repository
-@Transactional(readOnly = true)
 public interface AccountRepository extends JpaRepository<Accounts, Integer> {
 
     Optional<Accounts> findById(int id);

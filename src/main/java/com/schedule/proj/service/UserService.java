@@ -12,6 +12,7 @@ public class UserService {
 
     @Autowired
     ApplicationEventPublisher applicationEventPublisher;
+    @Autowired
     UserRepository userRepository;
 
     public List<User> getAllUsers(){

@@ -2,6 +2,7 @@ package com.schedule.proj.controller;
 
 
 import com.schedule.proj.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.schedule.proj.repository.AccountRepository;
@@ -11,9 +12,8 @@ import com.schedule.proj.repository.AccountRepository;
 @RequestMapping("/system")
 public class SystemController {
 
-
+    @Autowired
     public AccountRepository accountRepository;
-
 
     public String registerRoles() {
 
