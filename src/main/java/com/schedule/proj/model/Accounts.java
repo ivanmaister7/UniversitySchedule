@@ -1,14 +1,10 @@
 package com.schedule.proj.model;
 
 
-import javax.persistence.Table;
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name="Accounts")
+//@Table(name="Accounts")
 public class Accounts {
 
     @Id
@@ -28,7 +24,9 @@ public class Accounts {
     }
 
 
-    public int getId() {return id;}
+    public int getId() {
+        return id;
+    }
 
     public User getUser() {
         return user;

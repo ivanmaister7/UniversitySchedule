@@ -1,20 +1,16 @@
 package com.schedule.proj.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
-import javax.persistence.Table;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
+//@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
-@Table(name = "Student")
+//@Table(name = "Student")
 public class Student {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
-
     private String faculty;
-
     private String speciality;
     private int year;
 
@@ -27,7 +23,7 @@ public class Student {
     public Student() {
 
     }
-    public void setId(int id) {
+    public void setStudentId(int id) {
         this.id = id;
     }
 
@@ -45,7 +41,7 @@ public class Student {
 
 
 
-    public int getId() {
+    public int getStudentId() {
         return id;
     }
 
@@ -60,4 +56,5 @@ public class Student {
     public int getYear() {
         return year;
     }
+
 }
