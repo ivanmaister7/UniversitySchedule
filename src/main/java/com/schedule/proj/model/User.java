@@ -1,43 +1,41 @@
 package com.schedule.proj.model;
 
 
-import javax.persistence.Table;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name="Users")
+//@Table(name="Users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role userRole;
 
     @Column(unique=true)
     private String email;
 
     private String password;
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
 
 
     public User() {
     }
 
-    public User(Role role,
+    public User(Role userRole,
                 String email,
                 String password,
-                String first_name,
-                String last_name,
+                String firstName,
+                String lastName,
                 String avatar) {
-        this.role = role;
+        this.userRole = userRole;
         this.email = email;
         this.password = password;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.firstName = firstName;
+        this.lastName = lastName;
 
     }
 
@@ -45,12 +43,12 @@ public class User {
         return id;
     }
 
-    public Role getRole() {
-        return role;
+    public Role getUserRole() {
+        return userRole;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setUserRole(Role role) {
+        this.userRole = role;
     }
 
     public String getEmail() {
@@ -69,20 +67,20 @@ public class User {
         this.password = password;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
 
@@ -103,11 +101,11 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", role=" + role +
+                ", role=" + userRole +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
+                ", first_name='" + firstName + '\'' +
+                ", last_name='" + lastName + '\'' +
                 '}';
     }
 }

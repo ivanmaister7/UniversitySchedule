@@ -12,10 +12,7 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
+    Collection<Object> findByUserRole(Role teacher);
 
-    @Query("Select user from User user")
-    List<User> findAll();
-    Collection<Object> findByRole(Role teacher);
-
-    User findOneById(int userId);
+    User findOneById(int id);
 }

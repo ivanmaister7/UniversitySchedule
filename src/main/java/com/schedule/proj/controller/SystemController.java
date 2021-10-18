@@ -67,9 +67,9 @@ public class SystemController {
         User n = new User();
         n.setEmail(i + "_" + role.name() + "@email.com");
         n.setPassword("password");
-        n.setFirst_name(i + "_" + role.name() + "FN");
-        n.setLast_name(i + "_" + role.name() + "LN");
-        n.setRole(role);
+        n.setFirstName(i + "_" + role.name() + "FN");
+        n.setLastName(i + "_" + role.name() + "LN");
+        n.setUserRole(role);
         return n;
     }
 
