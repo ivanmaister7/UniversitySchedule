@@ -14,5 +14,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     Collection<Object> findByUserRole(Role teacher);
 
-    User findOneById(int id);
+    User findOneByUserId(int userId);
 }

@@ -15,20 +15,22 @@ import java.util.List;
 
 //@Component
 @Entity
+@Table(name="subject")
 public class Subject {
 
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "student")
+    @ManyToMany(mappedBy = "subjectsList")
     private List<Student> studentsList;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "teacher")
+    @ManyToMany(mappedBy = "subjectsList")
     private List<Teacher> teachersList;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="subject_id")
+    private int subjectId;
 //    @Column(name = "id", nullable = false)
     @Column(name="lesson_name")
     private String lessonName;
@@ -45,9 +47,8 @@ public class Subject {
     @Column(name="lesson_group")
     private int lessonGroup;
 
-    public int getId() {
-
-        return id;
+    public int getSubjectId() {
+        return subjectId;
     }
 
     //    public Lesson(String name, DayOfWeek dayOfWeek, LocalTime time, ArrayList<Integer> weeks, int group) {
