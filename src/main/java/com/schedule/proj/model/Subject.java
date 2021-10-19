@@ -3,6 +3,7 @@ package com.schedule.proj.model;
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.Collection;
 
 //@Component
 @Entity
@@ -19,7 +20,9 @@ public class Subject {
 
     @Column(name="lesson_time")
     private LocalTime lessonTime;
-    private int weeks;
+
+    @ElementCollection
+    private Collection<Integer> weeks;
 
     @Column(name="lesson_group")
     private int lessonGroup;
