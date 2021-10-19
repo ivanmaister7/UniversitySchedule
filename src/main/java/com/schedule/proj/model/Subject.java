@@ -15,6 +15,16 @@ import java.util.List;
 //@Component
 @Entity
 public class Subject {
+
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "student")
+    private List<Student> studentsList;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "teacher")
+    private List<Teacher> teachersList;
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
@@ -33,15 +43,7 @@ public class Subject {
     private int lessonGroup;
 
     public int getId() {
-    @JsonIgnore
-    @ManyToMany(mappedBy = "student")
-    private List<Student> studentsList;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "teacher")
-    private List<Teacher> teachersList;
-
-    public Long getId() {
         return id;
     }
 
