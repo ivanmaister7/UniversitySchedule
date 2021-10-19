@@ -1,5 +1,6 @@
 package com.schedule.proj.model;
 
+import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
@@ -11,23 +12,27 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+//@Component
 @Entity
-@Table(name="subject")
 public class Subject {
-
-
     @Id
-    @Column(name = "id", nullable = false)
-    private Long id;
-    private int lessonId;
-    private String name;
-    private int week;
-    private DayOfWeek dayOfWeek;
-    private LocalTime time;
-    private int weeks;
-    private int group;
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private int id;
+//    @Column(name = "id", nullable = false)
+    @Column(name="lesson_name")
+    private String lessonName;
 
+    @Column(name="day_of_week")
+    private DayOfWeek dayOfWeek;
+
+    @Column(name="lesson_time")
+    private LocalTime lessonTime;
+    private int weeks;
+
+    @Column(name="lesson_group")
+    private int lessonGroup;
+
+    public int getId() {
     @JsonIgnore
     @ManyToMany(mappedBy = "student")
     private List<Student> studentsList;
@@ -40,33 +45,21 @@ public class Subject {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
-//    public Lesson(String name, DayOfWeek dayOfWeek, LocalTime time, ArrayList<Integer> weeks, int group) {
+    //    public Lesson(String name, DayOfWeek dayOfWeek, LocalTime time, ArrayList<Integer> weeks, int group) {
 //        this.name = name;
 //        this.dayOfWeek = dayOfWeek;
 //        this.time = time;
 //        this.weeks = weeks;
 //        this.group = group;
-//    }
+//    }\
 
-    public int getLessonId() {
-        return lessonId;
+
+    public String getLessonName() {
+        return lessonName;
     }
 
-    public void setLessonId(int lessonId) {
-        this.lessonId = lessonId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setLessonName(String lessonName) {
+        this.lessonName = lessonName;
     }
 
     public DayOfWeek getDayOfWeek() {
@@ -77,20 +70,19 @@ public class Subject {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public LocalTime getLessonTime() {
+        return lessonTime;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setLessonTime(LocalTime lessonTime) {
+        this.lessonTime = lessonTime;
     }
 
-
-    public int getGroup() {
-        return group;
+    public int getLessonGroup() {
+        return lessonGroup;
     }
 
-    public void setGroup(int group) {
-        this.group = group;
+    public void setLessonGroup(int lessonGroup) {
+        this.lessonGroup = lessonGroup;
     }
 }
