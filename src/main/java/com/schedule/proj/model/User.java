@@ -9,7 +9,8 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name="user_id")
+    private int userId;
 
     @Enumerated(EnumType.STRING)
     private Role userRole;
@@ -22,7 +23,7 @@ public class User {
     private String lastName;
 
     @OneToOne (mappedBy = "user")
-    private Accounts accounts;
+    private Accounts userAccounts;
 
     public User() {
     }
@@ -41,8 +42,8 @@ public class User {
 
     }
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
     public Role getUserRole() {
@@ -91,18 +92,18 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id)  && Objects.equals(email, user.email);
+        return Objects.equals(userId, user.userId)  && Objects.equals(email, user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email);
+        return Objects.hash(userId, email);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id=" + userId +
                 ", role=" + userRole +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +

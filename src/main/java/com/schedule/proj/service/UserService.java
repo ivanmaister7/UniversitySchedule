@@ -21,7 +21,7 @@ public class UserService {
 
     public User getUserById(String id) {
         int userId = Integer.parseInt(id);
-        return userRepository.findOneById(userId);
+        return userRepository.findOneByUserId(userId);
     }
 
 
