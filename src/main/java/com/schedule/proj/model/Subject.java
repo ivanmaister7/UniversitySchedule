@@ -1,29 +1,40 @@
 package com.schedule.proj.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Entity
+@Table(name="subject")
 public class Subject {
+
+
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
-
     private int lessonId;
     private String name;
+    private int week;
     private DayOfWeek dayOfWeek;
     private LocalTime time;
     private int weeks;
     private int group;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "student")
+    private List<Student> studentsList;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "teacher")
+    private List<Teacher> teachersList;
 
     public Long getId() {
         return id;
@@ -32,6 +43,7 @@ public class Subject {
     public void setId(Long id) {
         this.id = id;
     }
+
 
 //    public Lesson(String name, DayOfWeek dayOfWeek, LocalTime time, ArrayList<Integer> weeks, int group) {
 //        this.name = name;

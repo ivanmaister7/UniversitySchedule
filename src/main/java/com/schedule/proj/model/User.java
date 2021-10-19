@@ -23,6 +23,8 @@ public class User {
     private String first_name;
     private String last_name;
 
+    @OneToOne (mappedBy = "user")
+    private Accounts accounts;
 
     public User() {
     }

@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.persistence.Table;
+import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
-@Table(name = "Student")
+@Table(name = "student")
 public class Student {
 
     @Id
@@ -17,6 +18,19 @@ public class Student {
 
     private String speciality;
     private int year;
+
+    @OneToOne
+    @JoinColumn(name = "id")
+    @MapsId
+    private Accounts accounts;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "subject",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "subject_id")
+    )
+    private Set<Subject> subjectsList;
 
     public Student(String faculty, String speciality, int year) {
         this.faculty = faculty;
