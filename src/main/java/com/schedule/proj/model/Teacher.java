@@ -1,34 +1,39 @@
 package com.schedule.proj.model;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-//@JsonIgnoreProperties({"hibernateLazyInitializer"})
+import javax.persistence.*;
+import javax.persistence.Table;
+import java.util.Set;
+
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
-@Table(name = "Teacher")
+@Table(name = "teacher")
 public class Teacher {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    public String email;
-
-    @Column(name="first_name")
-    public String firstName;
-
-    @Column(name="last_name")
-    public String lastName;
-
     public String faculty;
     public String cathedra;
     public String rank;
+
+    @OneToOne
+    @JoinColumn(name = "id")
+    @MapsId
+    private Accounts accounts;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "subject",
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "subject_id")
+    )
+    private Set<Subject> subjectsList;
 
     public Teacher() {
 
     }
 
-    public int getId() {
-        return id;
-    }
 
     public String getFaculty() {
         return faculty;
@@ -52,30 +57,6 @@ public class Teacher {
 
     public void setRank(String rank) {
         this.rank = rank;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public Teacher(String faculty, String cathedra, String rank) {

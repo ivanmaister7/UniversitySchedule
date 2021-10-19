@@ -21,6 +21,8 @@ public class User {
     private String firstName;
     private String lastName;
 
+    @OneToOne (mappedBy = "user")
+    private Accounts accounts;
 
     public User() {
     }

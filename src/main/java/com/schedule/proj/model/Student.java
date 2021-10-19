@@ -1,18 +1,36 @@
 package com.schedule.proj.model;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-//@JsonIgnoreProperties({"hibernateLazyInitializer"})
+import javax.persistence.*;
+import javax.persistence.Table;
+import java.util.Set;
+
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
-//@Table(name = "Student")
+@Table(name = "student")
 public class Student {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+
     private String faculty;
+
     private String speciality;
     private int year;
+
+    @OneToOne
+    @JoinColumn(name = "id")
+    @MapsId
+    private Accounts accounts;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "subject",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "subject_id")
+    )
+    private Set<Subject> subjectsList;
 
     public Student(String faculty, String speciality, int year) {
         this.faculty = faculty;
@@ -23,7 +41,7 @@ public class Student {
     public Student() {
 
     }
-    public void setStudentId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -41,7 +59,7 @@ public class Student {
 
 
 
-    public int getStudentId() {
+    public int getId() {
         return id;
     }
 
@@ -56,5 +74,4 @@ public class Student {
     public int getYear() {
         return year;
     }
-
 }

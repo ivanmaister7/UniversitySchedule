@@ -16,6 +16,12 @@ public class Accounts {
     @MapsId
     private User user;
 
+    @OneToOne (mappedBy = "accounts")
+    private Teacher teacher;
+
+    @OneToOne (mappedBy = "accounts")
+    private Student student;
+
     public Accounts() {
     }
 
