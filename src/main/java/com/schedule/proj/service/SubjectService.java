@@ -11,8 +11,21 @@ import java.util.Optional;
 
 @Service
 public class SubjectService {
+
+
+
     @Autowired
     private SubjectRepository subjectRepository;
+
+//    @Autowired
+//    public SubjectService(SubjectRepository subjectRepository) {
+//        this.subjectRepository = subjectRepository;
+//    }
+
+//    @Autowired
+//    public SubjectRepository getSubjectRepository() {
+//        return subjectRepository;
+//    }
 
     public Subject createPerson(Subject person) {
         return subjectRepository.save(person);
