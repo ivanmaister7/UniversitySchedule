@@ -1,60 +1,71 @@
 package com.schedule.proj.model;
 
+import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.Collection;
 import java.util.ArrayList;
+import java.util.List;
 
-@Component
+//@Component
 @Entity
+@Table(name="subject")
 public class Subject {
+
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "subjectsList")
+    private List<Student> studentsList;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "subjectsList")
+    private List<Teacher> teachersList;
+
     @Id
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="subject_id")
+    private int subjectId;
+//    @Column(name = "id", nullable = false)
+    @Column(name="lesson_name")
+    private String lessonName;
 
-    private int lessonId;
-    private String name;
+    @Column(name="day_of_week")
     private DayOfWeek dayOfWeek;
-    private LocalTime time;
-    private int weeks;
-    private int group;
 
-    public Long getId() {
-        return id;
+    @Column(name="lesson_time")
+    private LocalTime lessonTime;
+
+    @ElementCollection
+    private Collection<Integer> weeks;
+
+    @Column(name="lesson_group")
+    private int lessonGroup;
+
+    public int getSubjectId() {
+        return subjectId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-//    public Lesson(String name, DayOfWeek dayOfWeek, LocalTime time, ArrayList<Integer> weeks, int group) {
+    //    public Lesson(String name, DayOfWeek dayOfWeek, LocalTime time, ArrayList<Integer> weeks, int group) {
 //        this.name = name;
 //        this.dayOfWeek = dayOfWeek;
 //        this.time = time;
 //        this.weeks = weeks;
 //        this.group = group;
-//    }
+//    }\
 
-    public int getLessonId() {
-        return lessonId;
+
+    public String getLessonName() {
+        return lessonName;
     }
 
-    public void setLessonId(int lessonId) {
-        this.lessonId = lessonId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setLessonName(String lessonName) {
+        this.lessonName = lessonName;
     }
 
     public DayOfWeek getDayOfWeek() {
@@ -65,20 +76,19 @@ public class Subject {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public LocalTime getLessonTime() {
+        return lessonTime;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setLessonTime(LocalTime lessonTime) {
+        this.lessonTime = lessonTime;
     }
 
-
-    public int getGroup() {
-        return group;
+    public int getLessonGroup() {
+        return lessonGroup;
     }
 
-    public void setGroup(int group) {
-        this.group = group;
+    public void setLessonGroup(int lessonGroup) {
+        this.lessonGroup = lessonGroup;
     }
 }

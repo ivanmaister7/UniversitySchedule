@@ -4,31 +4,50 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.persistence.Table;
+import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
-@Table(name = "Student")
+@Table(name = "student")
 public class Student {
 
     @Id
-    private int id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name = "student_id")
+    private int studentId;
 
     private String faculty;
 
     private String speciality;
-    private int year;
+    @Column(name = "student_year")
+    private int studentYear;
 
-    public Student(String faculty, String speciality, int year) {
+    @OneToOne
+    @JoinColumn(name = "accounts_id")
+//    @MapsId
+    private Accounts studentAccounts;
+
+    @Column(name="subjects_list")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "student_subject",
+            joinColumns = @JoinColumn(name = "subject_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private Set<Subject> subjectsList;
+
+    public Student(String faculty, String speciality, int studentYear) {
         this.faculty = faculty;
         this.speciality = speciality;
-        this.year = year;
+        this.studentYear = studentYear;
     }
 
     public Student() {
 
     }
-    public void setId(int id) {
-        this.id = id;
+
+    public int getStudentId() {
+        return studentId;
     }
 
     public void setFaculty(String faculty) {
@@ -39,14 +58,8 @@ public class Student {
         this.speciality = speciality;
     }
 
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-
-
-    public int getId() {
-        return id;
+    public void setStudentYear(int studentYear) {
+        this.studentYear = studentYear;
     }
 
     public String getFaculty() {
@@ -57,7 +70,7 @@ public class Student {
         return speciality;
     }
 
-    public int getYear() {
-        return year;
+    public int getStudentYear() {
+        return studentYear;
     }
 }

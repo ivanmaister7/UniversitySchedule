@@ -1,24 +1,27 @@
 package com.schedule.proj.model;
 
 
-import javax.persistence.Table;
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name="Accounts")
+//@Table(name="Accounts")
 public class Accounts {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name="accounts_id")
+    private int accountsId;
 
-    @OneToOne
-    @JoinColumn(name = "id")
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id")
     @MapsId
     private User user;
+
+    @OneToOne (mappedBy = "teacherAccounts", cascade = CascadeType.PERSIST)
+    private Teacher teacher;
+
+    @OneToOne (mappedBy = "studentAccounts", cascade = CascadeType.REFRESH)
+    private Student student;
 
     public Accounts() {
     }
@@ -28,7 +31,9 @@ public class Accounts {
     }
 
 
-    public int getId() {return id;}
+    public int getAccountsId() {
+        return accountsId;
+    }
 
     public User getUser() {
         return user;
