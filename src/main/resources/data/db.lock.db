@@ -1,6 +1,6 @@
 #FileLock
-#Tue Oct 19 23:40:28 EEST 2021
-server=192.168.0.107\:58377
-hostName=DESKTOP-RIRTRKR
+#Wed Oct 20 18:18:34 EEST 2021
+server=192.168.31.63\:59470
+hostName=host.docker.internal
 method=file
-id=17c9a48b318e387e27bdbb5361fdd15c30f99e421c8
+id=17c9e4859d6b5df9dce98a037cfa41a2ec0bc5a897a

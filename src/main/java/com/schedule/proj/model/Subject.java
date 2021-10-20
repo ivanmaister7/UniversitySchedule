@@ -23,9 +23,10 @@ public class Subject {
     @ManyToMany(mappedBy = "subjectsList")
     private List<Student> studentsList;
 
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
     @JsonIgnore
-    @ManyToMany(mappedBy = "subjectsList")
-    private List<Teacher> teachersList;
+    private Teacher teacher;
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -50,15 +51,6 @@ public class Subject {
     public int getSubjectId() {
         return subjectId;
     }
-
-    //    public Lesson(String name, DayOfWeek dayOfWeek, LocalTime time, ArrayList<Integer> weeks, int group) {
-//        this.name = name;
-//        this.dayOfWeek = dayOfWeek;
-//        this.time = time;
-//        this.weeks = weeks;
-//        this.group = group;
-//    }\
-
 
     public String getLessonName() {
         return lessonName;
