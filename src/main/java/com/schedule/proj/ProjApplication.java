@@ -2,8 +2,7 @@ package com.schedule.proj;
 
 //import com.shedule.starter.mybeansspringbootstarter.service.MyBean;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -18,19 +17,24 @@ import java.nio.file.Paths;
 @ComponentScan("com.schedule.proj.repository")
 public class ProjApplication {
     private static final Logger logger = LogManager.getLogger();
+    final static Marker DB_ERROR = MarkerManager.getMarker("DATABASE_ERROR");
 
     public static void main(String[] args) {
 
         SpringApplication.run(ProjApplication.class, args);
 
-        logger.info("Log4j2ExampleApp started.");
+        ThreadContext.put("username","admin");
+        ThreadContext.put("ID", "37614");
+        logger.info("Login successful");
+        ThreadContext.clearMap();
+        ThreadContext.put("username","dev1");
+        ThreadContext.put("ID", "33894");
         logger.warn("Something to warn");
-        logger.error("Something failed.");
-            /*try {
-                Files.readAllBytes(Paths.get("/file/does/not/exist"));
-            } catch (IOException ioex) {
-                logger.error("Error message", ioex);
-            }*/
+        ThreadContext.clearMap();
+        ThreadContext.put("username","admin");
+        ThreadContext.put("ID", "37614");
+        logger.error(DB_ERROR,"Table not exist.");
+        ThreadContext.clearMap();
     }
 
 }
