@@ -26,14 +26,8 @@ public class Teacher {
 //    @MapsId
     private Accounts teacherAccounts;
 
-    @Column(name="subjects_list")
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "teacher_subject",
-            joinColumns = @JoinColumn(name = "subject_id"),
-            inverseJoinColumns = @JoinColumn(name = "teacher_id")
-    )
-    private Set<Subject> subjectsList;
+    @OneToMany(mappedBy = "teacher")
+    private Set<Subject> subjects;
 
     public Teacher() {
 
@@ -83,13 +77,7 @@ public class Teacher {
         this.teacherAccounts = teacherAccounts;
     }
 
-    public Set<Subject> getSubjectsList() {
-        return subjectsList;
-    }
 
-    public void setSubjectsList(Set<Subject> subjectsList) {
-        this.subjectsList = subjectsList;
-    }
 
     public Teacher(String email, String faculty, String cathedra, String rank) {
         this.email = email;
