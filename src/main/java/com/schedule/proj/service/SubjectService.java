@@ -1,10 +1,13 @@
 package com.schedule.proj.service;
 
-import com.schedule.proj.model.Student;
+import com.schedule.proj.exсeption.SubjectNotFoundException;
 import com.schedule.proj.model.Subject;
+import com.schedule.proj.model.Teacher;
 import com.schedule.proj.repository.SubjectRepository;
+import com.schedule.proj.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,46 +15,77 @@ import java.util.Optional;
 @Service
 public class SubjectService {
 
-
+    private final SubjectRepository subjectRepository;
+    private final TeacherRepository teacherRepository;
 
     @Autowired
-    private SubjectRepository subjectRepository;
-
-//    @Autowired
-//    public SubjectService(SubjectRepository subjectRepository) {
-//        this.subjectRepository = subjectRepository;
-//    }
-
-//    @Autowired
-//    public SubjectRepository getSubjectRepository() {
-//        return subjectRepository;
-//    }
-
-    public Subject createPerson(Subject person) {
-        return subjectRepository.save(person);
+    public SubjectService(SubjectRepository subjectRepository, TeacherRepository teacherRepository) {
+        this.subjectRepository = subjectRepository;
+        this.teacherRepository = teacherRepository;
     }
 
-    public Optional<Subject> getPerson(Long id) {
-        return subjectRepository.findById(id.intValue());
+    public Subject createSubject(Subject subject) {
+        return subjectRepository.save(subject);
     }
 
-    public Subject editPerson(Subject person) {
-        return subjectRepository.save(person);
+    public Subject getSubject(Long id) {
+        Optional<Subject> optionalSubject = subjectRepository.findById(id);
+
+        if (optionalSubject.isEmpty())
+            throw new SubjectNotFoundException();
+
+        return optionalSubject.get();
     }
 
-    public void deletePerson(Subject person) {
-        subjectRepository.delete(person);
+    @Transactional
+    public Subject updateSubject(Subject newSubject) {
+        Subject subject = subjectRepository.findById(newSubject.getSubjectId())
+                .orElseThrow(SubjectNotFoundException::new);
+
+        if (newSubject.getLessonName() != null) {
+            subject.setLessonName(newSubject.getLessonName());
+        }
+
+        if (newSubject.getDayOfWeek() != null) {
+            subject.setDayOfWeek(newSubject.getDayOfWeek());
+        }
+
+        if (newSubject.getLessonTime() != null) {
+            subject.setLessonTime(newSubject.getLessonTime());
+        }
+
+        if (newSubject.getLessonGroup() != null) {
+            subject.setLessonGroup(newSubject.getLessonGroup());
+        }
+
+        return subject;
     }
 
-    public void deletePerson(Long id) {
-        subjectRepository.deleteById(id.intValue());
+    public void deleteSubject(Subject subject) {
+        subjectRepository.delete(subject);
     }
 
-    public List<Subject> getAllPersons() {
+    public void deleteSubject(Long id) {
+        subjectRepository.deleteById(id);
+    }
+
+    public List<Subject> getAllSubjects() {
         return subjectRepository.findAll();
     }
 
-    public long countPersons() {
+    public long countSubjects() {
         return subjectRepository.count();
     }
+
+    @Transactional
+    public void setTeacher(Long subjectId, Long teacherId) {
+        Subject subject = subjectRepository.findById(subjectId)
+                .orElseThrow(SubjectNotFoundException::new);
+
+        Teacher teacher = teacherRepository.findById(teacherId)
+                .orElseThrow(SubjectNotFoundException::new);
+
+        subject.setSubjectTeacher(teacher);
+    }
+
 }

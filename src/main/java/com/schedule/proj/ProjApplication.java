@@ -14,8 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
-@ComponentScan("com.schedule.proj.repository")
+@SpringBootApplication
 public class ProjApplication {
     private static final Logger logger = LogManager.getLogger();
 
