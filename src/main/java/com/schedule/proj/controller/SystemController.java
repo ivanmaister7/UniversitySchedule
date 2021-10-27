@@ -9,7 +9,7 @@ import com.schedule.proj.repository.AccountRepository;
 
 
 @RestController
-@RequestMapping("/system")
+@RequestMapping("api/system")
 public class SystemController {
 
     @Autowired

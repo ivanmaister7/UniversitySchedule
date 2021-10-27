@@ -2,6 +2,9 @@ package com.schedule.proj.model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
@@ -16,10 +19,22 @@ public class User {
     private Role userRole;
 
     @Column(unique=true)
+    @Email(message = "Email should be valid")
     private String email;
 
+    @NotNull
+    @Size(min = 10, max = 30,
+            message = "First name must be between 10 and 30 characters")
     private String password;
+
+    @NotNull
+    @Size(min = 4, max = 32,
+            message = "First name must be between 4 and 32 characters")
     private String firstName;
+
+    @NotNull
+    @Size(min = 4, max = 32,
+            message = "Last name must be between 4 and 32 characters")
     private String lastName;
 
     @OneToOne (mappedBy = "user")

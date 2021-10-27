@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
@@ -14,26 +17,35 @@ public class Teacher {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="teacher_id")
-    private int teacherId;
-    private String email;
-    private String faculty;
-    private String cathedra;
-    private String rank;
+    private Long teacherId;
 
+    @Email
+    private String email;
+
+    @NotNull
+    @NotEmpty
+    private String faculty;
+
+    @NotNull
+    @NotEmpty
+    private String cathedra;
+
+    @NotEmpty
+    private String rank;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "accounts_id")
 //    @MapsId
     private Accounts teacherAccounts;
 
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "subjectTeacher", cascade = CascadeType.ALL)
     private Set<Subject> subjects;
 
     public Teacher() {
 
     }
 
-    public int getTeacherId() {
+    public Long getTeacherId() {
         return teacherId;
     }
 
@@ -77,7 +89,13 @@ public class Teacher {
         this.teacherAccounts = teacherAccounts;
     }
 
+    public Set<Subject> getSubjects() {
+        return subjects;
+    }
 
+    public void setSubjects(Set<Subject> subjects) {
+        this.subjects = subjects;
+    }
 
     public Teacher(String email, String faculty, String cathedra, String rank) {
         this.email = email;
