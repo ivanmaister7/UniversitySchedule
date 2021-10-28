@@ -7,43 +7,49 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
-@Entity
-//@Table(name="Users")
-public class User {
+@MappedSuperclass
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+// todo: user_role not working
+@DiscriminatorColumn(name="user_role",
+        discriminatorType = DiscriminatorType.INTEGER)
+public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="user_id")
-    private int userId;
+    @Column(name = "user_id")
+    private Long userId;
 
     @Enumerated(EnumType.STRING)
-    private Role userRole;
+    @Column(name = "user_role", insertable = false, updatable = false)
+    private UserRole userRole;
 
     @Column(unique=true)
     @Email(message = "Email should be valid")
     private String email;
 
-    @NotNull
+    // @NotNull
     @Size(min = 10, max = 30,
             message = "First name must be between 10 and 30 characters")
     private String password;
 
     @NotNull
-    @Size(min = 4, max = 32,
+    @Size(min = 4, max = 50,
             message = "First name must be between 4 and 32 characters")
+    @Column(name = "first_name")
     private String firstName;
 
     @NotNull
-    @Size(min = 4, max = 32,
-            message = "Last name must be between 4 and 32 characters")
+//    @Size(min = 4, max = 32,
+//            message = "Last name must be between 4 and 32 characters")
+    @Column(name = "last_name")
     private String lastName;
 
-    @OneToOne (mappedBy = "user")
-    private Accounts userAccounts;
+//    @OneToOne (mappedBy = "user")
+//    private Accounts userAccounts;
 
     public User() {
     }
 
-    public User(Role userRole,
+    public User(UserRole userRole,
                 String email,
                 String password,
                 String firstName,
@@ -57,15 +63,15 @@ public class User {
 
     }
 
-    public int getId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public Role getRole() {
+    public UserRole getUserRole() {
         return userRole;
     }
 
-    public void setRole(Role role) {
+    public void setUserRole(UserRole role) {
         this.userRole = role;
     }
 

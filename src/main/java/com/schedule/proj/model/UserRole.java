@@ -1,6 +1,6 @@
 package com.schedule.proj.model;
 
-public enum Role {
+public enum UserRole {
     ADMIN,
     STUDENT,
     TEACHER;

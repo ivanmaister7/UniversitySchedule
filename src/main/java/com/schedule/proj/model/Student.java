@@ -1,6 +1,7 @@
 package com.schedule.proj.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.*;
 import javax.persistence.Table;
@@ -12,14 +13,9 @@ import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
-@Table(name = "student")
-public class Student {
-
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "student_id")
-    private Long studentId;
-
+@DiscriminatorValue("2")
+@DiscriminatorOptions(force=true)
+public class Student extends User {
     @NotNull
     @NotEmpty
     private String faculty;
@@ -33,10 +29,6 @@ public class Student {
     @Column(name = "student_year")
     private Integer studentYear;
 
-    @OneToOne
-    @JoinColumn(name = "accounts_id")
-    private Accounts accounts;
-
     @Column(name="subjects_list")
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -46,18 +38,20 @@ public class Student {
     )
     private Set<Subject> subjectsList;
 
-    public Student(String faculty, String speciality, int studentYear) {
-        this.faculty = faculty;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "accounts_id")
+    private Accounts accounts;
+
+    public Student(UserRole userRole, String email, String password, String firstName, String lastName,
+                   String avatar, String speciality, String faculty, Integer studentYear) {
+        super(userRole, email, password, firstName, lastName, avatar);
         this.speciality = speciality;
+        this.faculty = faculty;
         this.studentYear = studentYear;
     }
 
     public Student() {
 
-    }
-
-    public Long getStudentId() {
-        return studentId;
     }
 
     public void setFaculty(String faculty) {
@@ -66,10 +60,6 @@ public class Student {
 
     public void setSpeciality(String speciality) {
         this.speciality = speciality;
-    }
-
-    public void setStudentYear(int studentYear) {
-        this.studentYear = studentYear;
     }
 
     public String getFaculty() {
@@ -84,5 +74,23 @@ public class Student {
         return studentYear;
     }
 
-}
+    public void setStudentYear(Integer studentYear) {
+        this.studentYear = studentYear;
+    }
 
+    public Accounts getStudentAccounts() {
+        return accounts;
+    }
+
+    public void setStudentAccounts(Accounts studentAccounts) {
+        this.accounts = studentAccounts;
+    }
+
+    public Set<Subject> getSubjectsList() {
+        return subjectsList;
+    }
+
+    public void setSubjectsList(Set<Subject> subjectsList) {
+        this.subjectsList = subjectsList;
+    }
+}

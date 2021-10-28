@@ -11,17 +11,8 @@ import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
-@Table(name = "teacher")
-public class Teacher {
-
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="teacher_id")
-    private Long teacherId;
-
-    @Email
-    private String email;
-
+@DiscriminatorValue("3")
+public class Teacher extends User {
     @NotNull
     @NotEmpty
     private String faculty;
@@ -33,19 +24,15 @@ public class Teacher {
     @NotEmpty
     private String rank;
 
+    @OneToMany(mappedBy = "subjectTeacher", cascade = CascadeType.ALL)
+    private Set<Subject> subjects;
+
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "accounts_id")
     private Accounts accounts;
 
-    @OneToMany(mappedBy = "subjectTeacher", cascade = CascadeType.ALL)
-    private Set<Subject> subjects;
-
     public Teacher() {
 
-    }
-
-    public Long getTeacherId() {
-        return teacherId;
     }
 
     public String getFaculty() {
@@ -72,21 +59,25 @@ public class Teacher {
         this.rank = rank;
     }
 
-    public String getEmail() {
-        return email;
+    public Accounts getTeacherAccounts() {
+        return accounts;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setTeacherAccounts(Accounts teacherAccounts) {
+        this.accounts = teacherAccounts;
     }
 
-
-    public void setAccounts(Accounts accounts) {
-        this.accounts = accounts;
+    public Set<Subject> getSubjects() {
+        return subjects;
     }
 
-    public Teacher(String email, String faculty, String cathedra, String rank) {
-        this.email = email;
+    public void setSubjects(Set<Subject> subjects) {
+        this.subjects = subjects;
+    }
+
+    public Teacher(UserRole userRole, String email, String password, String firstName, String lastName,
+                   String avatar, String faculty, String cathedra, String rank) {
+        super(userRole, email, password, firstName, lastName, avatar);
         this.faculty = faculty;
         this.cathedra = cathedra;
         this.rank = rank;
