@@ -57,15 +57,15 @@ public class User {
 
     }
 
-    public int getUserId() {
+    public int getId() {
         return userId;
     }
 
-    public Role getUserRole() {
+    public Role getRole() {
         return userRole;
     }
 
-    public void setUserRole(Role role) {
+    public void setRole(Role role) {
         this.userRole = role;
     }
 

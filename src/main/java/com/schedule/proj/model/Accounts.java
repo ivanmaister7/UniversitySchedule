@@ -17,10 +17,10 @@ public class Accounts {
     @MapsId
     private User user;
 
-    @OneToOne (mappedBy = "teacherAccounts", cascade = CascadeType.PERSIST)
+    @OneToOne (mappedBy = "accounts", cascade = CascadeType.PERSIST)
     private Teacher teacher;
 
-    @OneToOne (mappedBy = "studentAccounts", cascade = CascadeType.REFRESH)
+    @OneToOne (mappedBy = "accounts", cascade = CascadeType.REFRESH)
     private Student student;
 
     public Accounts() {

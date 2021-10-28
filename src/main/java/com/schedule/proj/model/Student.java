@@ -35,8 +35,7 @@ public class Student {
 
     @OneToOne
     @JoinColumn(name = "accounts_id")
-//    @MapsId
-    private Accounts studentAccounts;
+    private Accounts accounts;
 
     @Column(name="subjects_list")
     @ManyToMany(fetch = FetchType.LAZY)
@@ -85,23 +84,5 @@ public class Student {
         return studentYear;
     }
 
-    public void setStudentYear(Integer studentYear) {
-        this.studentYear = studentYear;
-    }
-
-    public Accounts getStudentAccounts() {
-        return studentAccounts;
-    }
-
-    public void setStudentAccounts(Accounts studentAccounts) {
-        this.studentAccounts = studentAccounts;
-    }
-
-    public Set<Subject> getSubjectsList() {
-        return subjectsList;
-    }
-
-    public void setSubjectsList(Set<Subject> subjectsList) {
-        this.subjectsList = subjectsList;
-    }
 }
+
