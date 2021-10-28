@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
@@ -14,13 +18,20 @@ public class Student {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "student_id")
-    private int studentId;
+    private Long studentId;
 
+    @NotNull
+    @NotEmpty
     private String faculty;
 
+    @NotNull
+    @NotEmpty
     private String speciality;
+
+    @Min(value = 1, message = "Year must not be less than 1")
+    @Max(value = 6, message = "Year must not be greater than 6")
     @Column(name = "student_year")
-    private int studentYear;
+    private Integer studentYear;
 
     @OneToOne
     @JoinColumn(name = "accounts_id")
@@ -45,7 +56,7 @@ public class Student {
 
     }
 
-    public int getStudentId() {
+    public Long getStudentId() {
         return studentId;
     }
 
@@ -69,11 +80,9 @@ public class Student {
         return speciality;
     }
 
-    public int getStudentYear() {
+    public Integer getStudentYear() {
         return studentYear;
     }
 
-    public void setAccounts(Accounts accounts) {
-        this.accounts = accounts;
-    }
 }
+
