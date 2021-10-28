@@ -61,7 +61,7 @@ public class StudentService
 
     @Transactional
     public Student updateStudent(Student newStudent) {
-        Student student = studentRepository.findById(newStudent.getStudentId())
+        Student student = studentRepository.findById(newStudent.getUserId())
                 .orElseThrow(StudentNotFoundException::new);
 
         if (newStudent.getStudentYear() != null) {

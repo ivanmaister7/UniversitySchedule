@@ -14,14 +14,12 @@ import java.util.List;
 @Entity
 @Table(name="subject")
 public class Subject {
-
-
     @JsonIgnore
     @ManyToMany(mappedBy = "subjectsList", cascade = CascadeType.ALL)
     private List<Student> studentsList;
 
     @ManyToOne
-    @JoinColumn(name = "teacher_id")
+    @JoinColumn(name = "user_id")
     @JsonIgnore
     private Teacher subjectTeacher;
 
@@ -30,37 +28,49 @@ public class Subject {
     @Column(name="subject_id")
     private Long subjectId;
 
-    @Size(min = 4, max = 32,
+    @Size(min = 4, max = 200,
             message = "Lesson name must be between 4 and 32 characters")
-    @Column(name="lesson_name")
-    private String lessonName;
+    @Column(name="subject_name")
+    private String subjectName;
 
     @NotNull
     @Column(name="day_of_week")
     private DayOfWeek dayOfWeek;
 
     @NotNull
-    @Column(name="lesson_time")
-    private LocalTime lessonTime;
+    @Column(name="subject_time")
+    private LocalTime subjectTime;
 
     @NotNull
     @ElementCollection
     private Collection<Integer> weeks;
 
     @NotNull
-    @Column(name="lesson_group")
-    private Integer lessonGroup;
+    @Column(name="subject_group")
+    private Integer subjectGroup;
+
+    @NotNull
+    @Column(name="subject_faculty")
+    private String subjectFaculty;
+
+    @NotNull
+    @Column(name="subject_speciality")
+    private String subjectSpeciality;
+
+    @NotNull
+    @Column(name="education_format")
+    private String educationFormat;
 
     public Long getSubjectId() {
         return subjectId;
     }
 
-    public String getLessonName() {
-        return lessonName;
+    public String getSubjectName() {
+        return subjectName;
     }
 
-    public void setLessonName(String lessonName) {
-        this.lessonName = lessonName;
+    public void setSubjectName(String lessonName) {
+        this.subjectName = lessonName;
     }
 
     public DayOfWeek getDayOfWeek() {
@@ -71,20 +81,20 @@ public class Subject {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public LocalTime getLessonTime() {
-        return lessonTime;
+    public LocalTime getSubjectTime() {
+        return subjectTime;
     }
 
-    public void setLessonTime(LocalTime lessonTime) {
-        this.lessonTime = lessonTime;
+    public void setSubjectTime(LocalTime lessonTime) {
+        this.subjectTime = lessonTime;
     }
 
-    public Integer getLessonGroup() {
-        return lessonGroup;
+    public Integer getSubjectGroup() {
+        return subjectGroup;
     }
 
-    public void setLessonGroup(int lessonGroup) {
-        this.lessonGroup = lessonGroup;
+    public void setSubjectGroup(int lessonGroup) {
+        this.subjectGroup = lessonGroup;
     }
 
     public List<Student> getStudentsList() {
@@ -112,6 +122,49 @@ public class Subject {
     }
 
     public void setLessonGroup(Integer lessonGroup) {
-        this.lessonGroup = lessonGroup;
+        this.subjectGroup = lessonGroup;
     }
+
+    public void setSubjectGroup(Integer subjectGroup) {
+        this.subjectGroup = subjectGroup;
+    }
+
+    public String getSubjectFaculty() {
+        return subjectFaculty;
+    }
+
+    public void setSubjectFaculty(String subjectFaculty) {
+        this.subjectFaculty = subjectFaculty;
+    }
+
+    public String getSubjectSpeciality() {
+        return subjectSpeciality;
+    }
+
+    public void setSubjectSpeciality(String subjectSpeciality) {
+        this.subjectSpeciality = subjectSpeciality;
+    }
+
+    public String getEducationFormat() {
+        return educationFormat;
+    }
+
+    public void setEducationFormat(String educationFormat) {
+        this.educationFormat = educationFormat;
+    }
+
+    public Subject(Teacher subjectTeacher, String subjectName, DayOfWeek dayOfWeek,
+                   LocalTime subjectTime, Integer subjectGroup, String subjectFaculty,
+                   String subjectSpeciality, String educationFormat) {
+        this.subjectTeacher = subjectTeacher;
+        this.subjectName = subjectName;
+        this.dayOfWeek = dayOfWeek;
+        this.subjectTime = subjectTime;
+        this.subjectGroup = subjectGroup;
+        this.subjectFaculty = subjectFaculty;
+        this.subjectSpeciality = subjectSpeciality;
+        this.educationFormat = educationFormat;
+    }
+
+    public Subject() {}
 }

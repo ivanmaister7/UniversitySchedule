@@ -42,20 +42,20 @@ public class SubjectService {
         Subject subject = subjectRepository.findById(newSubject.getSubjectId())
                 .orElseThrow(SubjectNotFoundException::new);
 
-        if (newSubject.getLessonName() != null) {
-            subject.setLessonName(newSubject.getLessonName());
+        if (newSubject.getSubjectName() != null) {
+            subject.setSubjectName(newSubject.getSubjectName());
         }
 
         if (newSubject.getDayOfWeek() != null) {
             subject.setDayOfWeek(newSubject.getDayOfWeek());
         }
 
-        if (newSubject.getLessonTime() != null) {
-            subject.setLessonTime(newSubject.getLessonTime());
+        if (newSubject.getSubjectTime() != null) {
+            subject.setSubjectTime(newSubject.getSubjectTime());
         }
 
-        if (newSubject.getLessonGroup() != null) {
-            subject.setLessonGroup(newSubject.getLessonGroup());
+        if (newSubject.getSubjectGroup() != null) {
+            subject.setLessonGroup(newSubject.getSubjectGroup());
         }
 
         return subject;
