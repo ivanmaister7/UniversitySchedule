@@ -23,8 +23,7 @@ public class Teacher {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "accounts_id")
-//    @MapsId
-    private Accounts teacherAccounts;
+    private Accounts accounts;
 
     @OneToMany(mappedBy = "teacher")
     private Set<Subject> subjects;
@@ -69,15 +68,10 @@ public class Teacher {
         this.email = email;
     }
 
-    public Accounts getTeacherAccounts() {
-        return teacherAccounts;
+
+    public void setAccounts(Accounts accounts) {
+        this.accounts = accounts;
     }
-
-    public void setTeacherAccounts(Accounts teacherAccounts) {
-        this.teacherAccounts = teacherAccounts;
-    }
-
-
 
     public Teacher(String email, String faculty, String cathedra, String rank) {
         this.email = email;
