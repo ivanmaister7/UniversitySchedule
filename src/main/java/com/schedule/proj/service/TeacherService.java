@@ -6,6 +6,7 @@ import com.schedule.proj.exсeption.SubjectNotFoundException;
 import com.schedule.proj.model.Teacher;
 import com.schedule.proj.model.Subject;
 import com.schedule.proj.repository.SubjectRepository;
+import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,8 @@ public class TeacherService {
 
     private final TeacherRepository teacherRepository;
     private final SubjectRepository subjectRepository;
+    private static final Logger logger = LogManager.getLogger();
+    final static Marker MARKER_TEACHER = MarkerManager.getMarker("TeacherService");
 
     @Autowired
     public TeacherService(TeacherRepository teacherRepository, SubjectRepository subjectRepository) {
@@ -29,6 +32,7 @@ public class TeacherService {
     }
 
     public Teacher createTeacher(Teacher teacher) {
+
         return teacherRepository.save(teacher);
     }
 
@@ -62,7 +66,12 @@ public class TeacherService {
     }
 
     public Teacher addTeacher(Teacher teacher) {
-        return teacherRepository.save(teacher);
+        Teacher t = teacherRepository.save(teacher);
+        ThreadContext.put("username",t.getFirstName() + " "+teacher.getLastName() );
+        ThreadContext.put("ID", t.getUserId().toString());
+        logger.info(MARKER_TEACHER,"Create teacher");
+        ThreadContext.clearMap();
+        return t;
     }
 
     @Transactional

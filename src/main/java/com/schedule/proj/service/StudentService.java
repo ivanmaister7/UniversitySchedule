@@ -4,8 +4,10 @@ import com.schedule.proj.exсeption.StudentNotFoundException;
 import com.schedule.proj.exсeption.SubjectNotFoundException;
 import com.schedule.proj.model.Student;
 import com.schedule.proj.model.Subject;
+import com.schedule.proj.model.Teacher;
 import com.schedule.proj.repository.StudentRepository;
 import com.schedule.proj.repository.SubjectRepository;
+import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,8 @@ public class StudentService
 {
     private final StudentRepository studentRepository;
     private final SubjectRepository subjectRepository;
+    private static final Logger logger = LogManager.getLogger();
+    final static Marker MARKER_STUDENT = MarkerManager.getMarker("StudentService");
 
     @Autowired
     public StudentService(StudentRepository studentRepository, SubjectRepository subjectRepository) {
@@ -27,7 +31,12 @@ public class StudentService
     }
 
     public Student createStudent(Student student) {
-        return studentRepository.save(student);
+        Student t = studentRepository.save(student);
+        ThreadContext.put("username",t.getFirstName() + " "+student.getLastName() );
+        ThreadContext.put("ID", t.getUserId().toString());
+        logger.info(MARKER_STUDENT,"Create student");
+        ThreadContext.clearMap();
+        return t;
     }
 
     public Student getStudent(Long id) {
