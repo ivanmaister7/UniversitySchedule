@@ -3,6 +3,7 @@ package com.schedule.proj.controller;
 import com.schedule.proj.model.Teacher;
 import com.schedule.proj.service.SubjectService;
 import com.schedule.proj.service.TeacherService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,15 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/teacher")
+@RequiredArgsConstructor
 public class TeacherController {
     private final TeacherService teacherService;
     private final SubjectService subjectService;
-
-    @Autowired
-    public TeacherController(TeacherService teacherService, SubjectService subjectService) {
-        this.teacherService = teacherService;
-        this.subjectService = subjectService;
-    }
 
     @GetMapping()
     @ResponseBody

@@ -2,21 +2,18 @@ package com.schedule.proj.controller;
 
 import com.schedule.proj.model.Subject;
 import com.schedule.proj.service.SubjectService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "api/subject")
 public class SubjectController {
     private final SubjectService subjectService;
-
-    @Autowired
-    public SubjectController(SubjectService subjectService) {
-        this.subjectService = subjectService;
-    }
 
     @GetMapping
     @ResponseBody

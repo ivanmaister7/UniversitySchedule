@@ -4,6 +4,7 @@ import com.schedule.proj.exсeption.InvalidStudentException;
 import com.schedule.proj.model.Student;
 import com.schedule.proj.repository.StudentRepository;
 import com.schedule.proj.service.StudentService;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -13,16 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.*;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "api/student")
 public class StudentController {
 
     private final StudentService studentService;
-
-    @Autowired
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
-    }
 
     @GetMapping()
     @ResponseBody

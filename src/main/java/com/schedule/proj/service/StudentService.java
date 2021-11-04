@@ -7,6 +7,7 @@ import com.schedule.proj.model.Subject;
 import com.schedule.proj.model.Teacher;
 import com.schedule.proj.repository.StudentRepository;
 import com.schedule.proj.repository.SubjectRepository;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,18 +18,13 @@ import java.util.Optional;
 
 
 @Service
+@RequiredArgsConstructor
 public class StudentService
 {
     private final StudentRepository studentRepository;
     private final SubjectRepository subjectRepository;
     private static final Logger logger = LogManager.getLogger();
     final static Marker MARKER_STUDENT = MarkerManager.getMarker("StudentService");
-
-    @Autowired
-    public StudentService(StudentRepository studentRepository, SubjectRepository subjectRepository) {
-        this.studentRepository = studentRepository;
-        this.subjectRepository = subjectRepository;
-    }
 
     public Student createStudent(Student student) {
         Student t = studentRepository.save(student);
