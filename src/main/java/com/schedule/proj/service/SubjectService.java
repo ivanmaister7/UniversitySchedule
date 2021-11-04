@@ -55,7 +55,7 @@ public class SubjectService {
         }
 
         if (newSubject.getSubjectGroup() != null) {
-            subject.setLessonGroup(newSubject.getSubjectGroup());
+            subject.setSubjectGroup(newSubject.getSubjectGroup());
         }
 
         return subject;

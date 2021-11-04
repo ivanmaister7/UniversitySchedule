@@ -1,6 +1,10 @@
 package com.schedule.proj.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.*;
@@ -11,10 +15,14 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @DiscriminatorValue("2")
 @DiscriminatorOptions(force=true)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Student extends User {
     @NotNull
     @NotEmpty
@@ -48,49 +56,5 @@ public class Student extends User {
         this.speciality = speciality;
         this.faculty = faculty;
         this.studentYear = studentYear;
-    }
-
-    public Student() {
-
-    }
-
-    public void setFaculty(String faculty) {
-        this.faculty = faculty;
-    }
-
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
-    }
-
-    public String getFaculty() {
-        return faculty;
-    }
-
-    public String getSpeciality() {
-        return speciality;
-    }
-
-    public Integer getStudentYear() {
-        return studentYear;
-    }
-
-    public void setStudentYear(Integer studentYear) {
-        this.studentYear = studentYear;
-    }
-
-    public Accounts getStudentAccounts() {
-        return accounts;
-    }
-
-    public void setStudentAccounts(Accounts studentAccounts) {
-        this.accounts = studentAccounts;
-    }
-
-    public Set<Subject> getSubjectsList() {
-        return subjectsList;
-    }
-
-    public void setSubjectsList(Set<Subject> subjectsList) {
-        this.subjectsList = subjectsList;
     }
 }
