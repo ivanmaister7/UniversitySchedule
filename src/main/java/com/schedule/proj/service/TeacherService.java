@@ -45,10 +45,6 @@ public class TeacherService {
         return optionalTeacher.get();
     }
 
-    public Teacher editTeacher(Teacher teacher) {
-        return teacherRepository.save(teacher);
-    }
-
     public void deleteTeacher(Teacher teacher) {
         teacherRepository.delete(teacher);
     }
@@ -80,8 +76,9 @@ public class TeacherService {
                 .orElseThrow(TeacherNotFoundException::new);
 
         if (newTeacher.getEmail() != null) {
-            if (teacherRepository.findByEmail(newTeacher.getEmail()).isPresent())
-                throw new DuplicateUserEmailException();
+//            if (teacherRepository.findByEmail(newTeacher.getEmail()).isPresent())
+//                throw new DuplicateUserEmailException();
+
             teacher.setEmail(newTeacher.getEmail());
         }
 
