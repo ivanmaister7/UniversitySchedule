@@ -16,8 +16,8 @@ import java.util.List;
 //@Component
 @Entity
 @Table(name="subject")
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 @Data
 public class Subject {
     @JsonIgnore
@@ -79,5 +79,8 @@ public class Subject {
         this.subjectFaculty = subjectFaculty;
         this.subjectSpeciality = subjectSpeciality;
         this.educationFormat = educationFormat;
+    }
+
+    public Subject() {
     }
 }
