@@ -42,13 +42,6 @@ public class Accounts {
         return accountsId;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
 
     public Teacher getTeacher() {
         return teacher;

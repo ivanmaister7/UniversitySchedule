@@ -2,7 +2,6 @@ package com.schedule.proj;
 
 //import com.shedule.starter.mybeansspringbootstarter.service.MyBean;
 
-import org.apache.logging.log4j.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
