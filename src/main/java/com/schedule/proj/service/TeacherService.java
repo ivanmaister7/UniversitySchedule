@@ -56,8 +56,8 @@ public class TeacherService {
 
     public Teacher addTeacher(Teacher teacher) {
         Teacher t = teacherRepository.save(teacher);
-        ThreadContext.put("username",t.getFirstName() + " "+teacher.getLastName() );
-        ThreadContext.put("ID", t.getUserId().toString());
+        ThreadContext.put("username",t.getUser().getFirstName() + " "+teacher.getUser().getLastName() );
+        ThreadContext.put("ID", t.getTeacherId().toString());
         logger.info(MARKER_TEACHER,"Create teacher");
         ThreadContext.clearMap();
         return t;
@@ -65,14 +65,14 @@ public class TeacherService {
 
     @Transactional
     public Teacher updateTeacher(Teacher newTeacher) {
-        Teacher teacher = teacherRepository.findById(newTeacher.getUserId())
+        Teacher teacher = teacherRepository.findById(newTeacher.getUser().getUserId())
                 .orElseThrow(TeacherNotFoundException::new);
 
-        if (newTeacher.getEmail() != null) {
+        if (newTeacher.getUser().getEmail() != null) {
 //            if (teacherRepository.findByEmail(newTeacher.getEmail()).isPresent())
 //                throw new DuplicateUserEmailException();
 
-            teacher.setEmail(newTeacher.getEmail());
+            teacher.getUser().setEmail(newTeacher.getUser().getEmail());
         }
 
         if (newTeacher.getCathedra() != null) {

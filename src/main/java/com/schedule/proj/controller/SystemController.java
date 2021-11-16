@@ -65,7 +65,7 @@ public class SystemController {
 
     private User createOneUser(int i, UserRole role) {
         // todo: replace with bean
-        User n = new Teacher();
+        User n = new User();
         n.setEmail(i + "_" + role.name() + "@email.com");
         n.setPassword("password");
         n.setFirstName(i + "_" + role.name() + "FN");

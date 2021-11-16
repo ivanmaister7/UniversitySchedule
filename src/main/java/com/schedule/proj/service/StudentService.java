@@ -28,8 +28,8 @@ public class StudentService
 
     public Student createStudent(Student student) {
         Student t = studentRepository.save(student);
-        ThreadContext.put("username",t.getFirstName() + " "+student.getLastName() );
-        ThreadContext.put("ID", t.getUserId().toString());
+        ThreadContext.put("username",t.getUser().getFirstName() + " "+student.getUser().getLastName() );
+        ThreadContext.put("ID", t.getUser().getUserId().toString());
         logger.info(MARKER_STUDENT,"Create student");
         ThreadContext.clearMap();
         return t;
@@ -66,7 +66,7 @@ public class StudentService
 
     @Transactional
     public Student updateStudent(Student newStudent) {
-        Student student = studentRepository.findById(newStudent.getUserId())
+        Student student = studentRepository.findById(newStudent.getUser().getUserId())
                 .orElseThrow(StudentNotFoundException::new);
 
         if (newStudent.getStudentYear() != null) {
@@ -80,10 +80,6 @@ public class StudentService
         if (newStudent.getFaculty() != null) {
             student.setFaculty(newStudent.getFaculty());
         }
-
-        // todo: manage subjects list,
-        //  pass only ids: update the whole by id, or
-        //  pass entities: create new course entities?
 
         return student;
     }

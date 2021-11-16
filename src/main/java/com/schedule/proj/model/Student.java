@@ -15,15 +15,21 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
-@DiscriminatorValue("2")
-@DiscriminatorOptions(force=true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student extends User {
+public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "student_id")
+    private Long studentId;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @NotNull
     @NotEmpty
     private String faculty;
@@ -50,9 +56,9 @@ public class Student extends User {
     @JoinColumn(name = "accounts_id")
     private Accounts accounts;
 
-    public Student(UserRole userRole, String email, String password, String firstName, String lastName,
+    public Student(String email, String password, String firstName, String lastName,
                    String avatar, String speciality, String faculty, Integer studentYear) {
-        super(userRole, email, password, firstName, lastName, avatar);
+        this.user = new User(UserRole.STUDENT, email, password, firstName, lastName, avatar);
         this.speciality = speciality;
         this.faculty = faculty;
         this.studentYear = studentYear;

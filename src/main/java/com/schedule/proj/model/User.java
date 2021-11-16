@@ -1,6 +1,8 @@
 package com.schedule.proj.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,19 +13,24 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
-@MappedSuperclass
-//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-// todo: user_role not working
-@DiscriminatorColumn(name="user_role",
-        discriminatorType = DiscriminatorType.INTEGER)
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class User {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
+
+    @OneToOne(mappedBy = "user")
+    @JsonIgnore
+    private Teacher teacher;
+
+    @OneToOne(mappedBy = "user")
+    @JsonIgnore
+    private Student student;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role", insertable = false, updatable = false)

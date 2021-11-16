@@ -1,5 +1,6 @@
 package com.schedule.proj.repository;
 
+import com.schedule.proj.model.Teacher;
 import com.schedule.proj.model.User;
 import com.schedule.proj.model.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -7,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.Optional;
 
 //@Repository
 //public interface UserRepository extends JpaRepository<User, Long> {
@@ -16,4 +18,6 @@ import java.util.Collection;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    @Query("Select t from User t where t.email = ?1")
+    Optional<User> findByEmail(String email);
 }

@@ -139,20 +139,33 @@ public class TestDataGenerator {
                 resultSubjectList
                         .stream()
                         .map(x -> String.format("(%s,'%s', %d, '%s', %d, '%s', '%s', '%s')",
-                                "(SELECT t.USER_ID FROM TEACHER t WHERE " +
+                                "(SELECT t.TEACHER_ID FROM TEACHER t WHERE " +
                                         "t.FACULTY = '" + x.getTeacher().getFaculty() +
-                                        "' AND t.FIRST_NAME = '" + x.getTeacher().getName() + "')",
+                                        "' AND (SELECT u.FIRST_NAME FROM USER u WHERE u.user_id = t.user_id) " +
+                                        " = '" + x.getTeacher().getName() + "')",
                                 x.getName(), x.getDayOfWeek().getValue(), x.getTime(),
                                 x.getGroup(), x.getFaculty(), x.getSpeciality(), x.getEducationFormat()))
                         .collect(Collectors.joining(",\n")) + ";\n";
     }
 
+    // todo: change if user is a field
     private static String convertTeachersSetToDbSyntax(List<Teacher> resultTeacherSet) {
-        return "INSERT INTO TEACHER (first_name, last_name, cathedra, faculty, rank) VALUES \n" +
+        String userInsert = "INSERT INTO USER (first_name, last_name) VALUES \n" +
                 resultTeacherSet
-                .stream()
-                .map(x -> String.format("('%s', '', 'cat', '%s', '%s')", x.getName(), x.getFaculty(), x.getRank()))
-                .collect(Collectors.joining(",\n")) + ";\n";
+                        .stream()
+                        .map(x -> String.format("('%s', '')", x.getName()))
+                        .collect(Collectors.joining(",\n")) + ";\n";
+
+        String teacherInsert = "INSERT INTO TEACHER (user_id, cathedra, faculty, rank) VALUES \n" +
+                resultTeacherSet
+                        .stream()
+                        .map(x -> String.format("(%s, 'cat', '%s', '%s')",
+                                "(SELECT t.USER_ID FROM USER t WHERE " +
+                                        "t.FIRST_NAME = '" + x.getName() + "')",
+                                x.getFaculty(), x.getRank()))
+                        .collect(Collectors.joining(",\n")) + ";\n";
+
+        return userInsert + '\n' + teacherInsert;
     }
 
     private static String weeksTeacherInsert(List<Subject> resultSubjectList) {
@@ -166,9 +179,10 @@ public class TestDataGenerator {
                                 "AND s.SUBJECT_TIME = '%s' AND s.EDUCATION_FORMAT = '%s' AND s.USER_ID = %s), " +
                                 "%d)", x.getName(), x.getGroup(), x.getSpeciality(),
                                 x.getDayOfWeek().getValue(), x.getTime(), x.getEducationFormat(),
-                                "(SELECT t.USER_ID FROM TEACHER t WHERE " +
+                                "(SELECT t.TEACHER_ID FROM TEACHER t WHERE " +
                                 "t.FACULTY = '" + x.getTeacher().getFaculty() +
-                                        "' AND t.FIRST_NAME = '" + x.getTeacher().getName() + "')",
+                                        "' AND (SELECT u.FIRST_NAME FROM USER u WHERE u.user_id = t.user_id)" +
+                                        " = '" + x.getTeacher().getName() + "')",
                                 y))
                                 .collect(Collectors.joining(",\n"))
                 ).collect(Collectors.joining(",\n")) + ";\n";

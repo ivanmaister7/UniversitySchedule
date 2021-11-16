@@ -14,6 +14,4 @@ import java.util.Set;
 
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
-    @Query("Select t from Teacher t where t.email = ?1")
-    Optional<Teacher> findByEmail(String email);
  }

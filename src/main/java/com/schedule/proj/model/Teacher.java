@@ -15,12 +15,20 @@ import java.util.Set;
 // @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
-@DiscriminatorValue("3")
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Teacher extends User {
+public class Teacher {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "teacher_id")
+    private Long teacherId;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @NotNull
     @NotEmpty
     private String faculty;
@@ -40,4 +48,12 @@ public class Teacher extends User {
     @JoinColumn(name = "accounts_id")
     private Accounts accounts;
 
+    public Teacher(String email, String password, String firstName, String lastName,
+                   String avatar, String faculty, String cathedra, String rank, Set<Subject> subjects) {
+        this.user = new User(UserRole.TEACHER, email, password, firstName, lastName, avatar);
+        this.faculty = faculty;
+        this.cathedra = cathedra;
+        this.rank = rank;
+        this.subjects = subjects;
+    }
 }
