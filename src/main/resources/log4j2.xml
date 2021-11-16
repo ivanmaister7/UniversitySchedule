@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration >
     <Appenders>
-        <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout disableAnsi="false"  pattern="%highlight{%d{HH:mm:ss.SSS} %-5level [%t] %logger{36}.%M() - %msg {%marker} (%X{username}; %X{ID})%n}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=white, DEBUG=green bold, TRACE=blue}"/>
-        </Console>
         <RollingFile name="rollingFile"
                      fileName="logs/log4j2.log"
                      filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
@@ -16,12 +13,17 @@
                         size="250 MB" />
             </Policies>
         </RollingFile>
+
+        <MyAppender name="MyAppender">
+            <MyLayout/>
+        </MyAppender>
+
     </Appenders>
 
     <Loggers>
         <Root level="info">
-            <AppenderRef ref="Console" />
             <AppenderRef ref="rollingFile" />
+            <AppenderRef ref="MyAppender" />
         </Root>
     </Loggers>
 
