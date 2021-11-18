@@ -22,7 +22,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long userId;
+    private int id;
 
     @OneToOne(mappedBy = "user")
     @JsonIgnore
@@ -36,22 +36,24 @@ public class User {
     @Column(name = "user_role", insertable = false, updatable = false)
     private UserRole userRole;
 
+
+
     @Column(unique=true)
-    @Email(message = "Email should be valid")
+    //@Email(message = "Email should be valid")
     private String email;
 
     // @NotNull
-    @Size(min = 10, max = 30,
-            message = "First name must be between 10 and 30 characters")
+  //  @Size(min = 10, max = 30,
+  //          message = "First name must be between 10 and 30 characters")
     private String password;
 
-    @NotNull
-    @Size(min = 4, max = 50,
-            message = "First name must be between 4 and 32 characters")
+   // @NotNull
+   // @Size(min = 4, max = 50,
+   //         message = "First name must be between 4 and 32 characters")
     @Column(name = "first_name")
     private String firstName;
 
-    @NotNull
+ //   @NotNull
 //    @Size(min = 4, max = 32,
 //            message = "Last name must be between 4 and 32 characters")
     @Column(name = "last_name")
@@ -79,18 +81,18 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(userId, user.userId)  && Objects.equals(email, user.email);
+        return Objects.equals(id, user.id)  && Objects.equals(email, user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, email);
+        return Objects.hash(id, email);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + userId +
+                "id=" + id +
                 ", role=" + userRole +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +

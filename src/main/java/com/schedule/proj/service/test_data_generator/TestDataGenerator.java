@@ -149,13 +149,14 @@ public class TestDataGenerator {
     }
 
     // todo: change if user is a field
+
+
     private static String convertTeachersSetToDbSyntax(List<Teacher> resultTeacherSet) {
-        String userInsert = "INSERT INTO USER (first_name, last_name) VALUES \n" +
+        String userInsert = "INSERT INTO USER (email, password, first_name, last_name) VALUES \n" +
                 resultTeacherSet
                         .stream()
-                        .map(x -> String.format("('%s', '')", x.getName()))
+                        .map(x -> String.format("('email@com.ua', 'password.com.ua', '%s', '')", x.getName()))
                         .collect(Collectors.joining(",\n")) + ";\n";
-
         String teacherInsert = "INSERT INTO TEACHER (user_id, cathedra, faculty, rank) VALUES \n" +
                 resultTeacherSet
                         .stream()
@@ -164,7 +165,6 @@ public class TestDataGenerator {
                                         "t.FIRST_NAME = '" + x.getName() + "')",
                                 x.getFaculty(), x.getRank()))
                         .collect(Collectors.joining(",\n")) + ";\n";
-
         return userInsert + '\n' + teacherInsert;
     }
 

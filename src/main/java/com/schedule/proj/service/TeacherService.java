@@ -65,7 +65,7 @@ public class TeacherService {
 
     @Transactional
     public Teacher updateTeacher(Teacher newTeacher) {
-        Teacher teacher = teacherRepository.findById(newTeacher.getUser().getUserId())
+        Teacher teacher = teacherRepository.findById((long) newTeacher.getUser().getId())
                 .orElseThrow(TeacherNotFoundException::new);
 
         if (newTeacher.getUser().getEmail() != null) {
@@ -85,5 +85,5 @@ public class TeacherService {
 
         return teacher;
     }
-    
+
 }
