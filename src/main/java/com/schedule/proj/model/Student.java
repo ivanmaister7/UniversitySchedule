@@ -24,18 +24,18 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "student_id")
-    private Long studentId;
+    private Integer studentId;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @NotNull
-    @NotEmpty
+
+
     private String faculty;
 
-    @NotNull
-    @NotEmpty
+
+
     private String speciality;
 
     @Min(value = 1, message = "Year must not be less than 1")

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 //@Repository
@@ -19,5 +20,19 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query("Select t from User t where t.email = ?1")
+
+
+    Optional<User> findById(int id);
+
+    @Query("Select user from User user")
+    List<User> findAll();
+
     Optional<User> findByEmail(String email);
+
+    User findOneById(int id);
+
+    User findUserByEmail(String email);
+
+
+
 }

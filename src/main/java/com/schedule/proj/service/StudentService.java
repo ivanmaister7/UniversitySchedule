@@ -4,7 +4,7 @@ import com.schedule.proj.exсeption.StudentNotFoundException;
 import com.schedule.proj.exсeption.SubjectNotFoundException;
 import com.schedule.proj.model.Student;
 import com.schedule.proj.model.Subject;
-import com.schedule.proj.model.Teacher;
+
 import com.schedule.proj.repository.StudentRepository;
 import com.schedule.proj.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,13 +29,13 @@ public class StudentService
     public Student createStudent(Student student) {
         Student t = studentRepository.save(student);
         ThreadContext.put("username",t.getUser().getFirstName() + " "+student.getUser().getLastName() );
-        ThreadContext.put("ID", t.getUser().getUserId().toString());
+       // ThreadContext.put("ID", t.getUser().getUserId().toString());
         logger.info(MARKER_STUDENT,"Create student");
         ThreadContext.clearMap();
         return t;
     }
 
-    public Student getStudent(Long id) {
+    public Student getStudent(Integer id) {
         Optional<Student> optionalStudent = studentRepository.findById(id);
 
         if (optionalStudent.isEmpty())
@@ -48,7 +48,7 @@ public class StudentService
         studentRepository.delete(student);
     }
 
-    public void deleteStudent(Long id) {
+    public void deleteStudent(Integer id) {
         studentRepository.deleteById(id);
     }
 
@@ -66,8 +66,7 @@ public class StudentService
 
     @Transactional
     public Student updateStudent(Student newStudent) {
-        Student student = studentRepository.findById(newStudent.getUser().getUserId())
-                .orElseThrow(StudentNotFoundException::new);
+        Student student = studentRepository.findById(newStudent.getStudentId()).orElseThrow(StudentNotFoundException::new);
 
         if (newStudent.getStudentYear() != null) {
             student.setStudentYear(newStudent.getStudentYear());
@@ -85,7 +84,7 @@ public class StudentService
     }
 
     @Transactional
-    public void addSubject(Long studentId, Long subjectId) {
+    public void addSubject(Integer studentId, Long subjectId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(StudentNotFoundException::new);
 
