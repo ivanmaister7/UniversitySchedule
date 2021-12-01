@@ -33,7 +33,7 @@ public class User {
     private Student student;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "user_role", insertable = false, updatable = false)
+    @Column(name = "user_role")
     private UserRole userRole;
 
 

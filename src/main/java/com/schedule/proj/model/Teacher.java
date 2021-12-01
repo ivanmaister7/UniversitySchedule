@@ -30,15 +30,15 @@ public class Teacher {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @NotNull
-    @NotEmpty
+    // @NotNull
+    // @NotEmpty
     private String faculty;
 
-    @NotNull
-    @NotEmpty
+    // @NotNull
+    // @NotEmpty
     private String cathedra;
 
-    @NotEmpty
+    // @NotEmpty
     private String rank;
 
     @OneToMany(mappedBy = "subjectTeacher", cascade = CascadeType.ALL)
