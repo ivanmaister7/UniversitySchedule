@@ -12,6 +12,6 @@ public class AccountController {
 
     @GetMapping("/")
     public String validateUserForm(){
-        return "redirect:/api/registration";
+        return "redirect:/api/auth/login";
     }
 }

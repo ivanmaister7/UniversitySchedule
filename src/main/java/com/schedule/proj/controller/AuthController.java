@@ -3,11 +3,14 @@ package com.schedule.proj.controller;
 
 import com.schedule.proj.exсeption.JwtAuthenticationException;
 import com.schedule.proj.model.DTO.LoginDTO;
+import com.schedule.proj.model.DTO.UserDTO;
 import com.schedule.proj.service.AuthenticationService;
 import com.schedule.proj.service.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.AuthenticationException;
@@ -16,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@RestController
+@Controller
 @RequestMapping("/api/auth")
 public class AuthController {
 
@@ -30,9 +33,14 @@ public class AuthController {
         this.userService = userService;
     }
 
+    @GetMapping("/login")
+    public String loginUserForm(Model model){
+        model.addAttribute("loginDTO", new LoginDTO());
+        return "user-login";
+    }
+
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDTO request){
-        System.out.println("hhhh");
+    public ResponseEntity<?> login(LoginDTO request){
         Map<String, String> res = new HashMap<>();
         try {
             String token = authenticationService.login(request);
