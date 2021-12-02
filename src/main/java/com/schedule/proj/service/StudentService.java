@@ -2,27 +2,43 @@ package com.schedule.proj.service;
 
 import com.schedule.proj.exсeption.StudentNotFoundException;
 import com.schedule.proj.exсeption.SubjectNotFoundException;
+import com.schedule.proj.model.DTO.StudentGeneralResponseDTO;
 import com.schedule.proj.model.Student;
 import com.schedule.proj.model.Subject;
 
+import com.schedule.proj.model.User;
+import com.schedule.proj.model.UserRole;
 import com.schedule.proj.repository.StudentRepository;
 import com.schedule.proj.repository.SubjectRepository;
+import com.schedule.proj.repository.UserRepository;
+import com.schedule.proj.security.jwt.JwtProvider;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 @Service
 @RequiredArgsConstructor
 public class StudentService
 {
+
     private final StudentRepository studentRepository;
     private final SubjectRepository subjectRepository;
+  private final  JwtProvider jwtProvider;
+    private final UserRepository userRepository;
     private static final Logger logger = LogManager.getLogger();
     final static Marker MARKER_STUDENT = MarkerManager.getMarker("StudentService");
 
@@ -35,14 +51,7 @@ public class StudentService
         return t;
     }
 
-    public Student getStudent(Integer id) {
-        Optional<Student> optionalStudent = studentRepository.findById(id);
 
-        if (optionalStudent.isEmpty())
-            throw new StudentNotFoundException();
-
-        return optionalStudent.get();
-    }
 
     public void deleteStudent(Student student) {
         studentRepository.delete(student);
@@ -64,33 +73,31 @@ public class StudentService
         return studentRepository.save(student);
     }
 
-    @Transactional
-    public Student updateStudent(Student newStudent) {
-        Student student = studentRepository.findById(newStudent.getStudentId()).orElseThrow(StudentNotFoundException::new);
 
-        if (newStudent.getStudentYear() != null) {
-            student.setStudentYear(newStudent.getStudentYear());
+
+
+    public ResponseEntity<String> updateStudentByToken(StudentGeneralResponseDTO dto, HttpServletRequest request) {
+        int k=5;
+        String token = jwtProvider.getTokenFromRequest(request);
+        int b=5;
+        String email = jwtProvider.getLoginFromToken(token);
+        User user = userRepository.findUserByEmail(email);
+        if(user.getUserRole() == UserRole.STUDENT && user!=null) {
+            Student student = studentRepository.getByUserId(user.getId());
+            int i=5;
+            user.setFirstName(dto.getFirstname());
+            user.setLastName(dto.getLastname());
+            student.setStudentYear(dto.getStudentYear());
+            student.setFaculty(dto.getFaculty());
+            student.setSpeciality(dto.getSpeciality());
+            studentRepository.save(student);
+            return new ResponseEntity<String>(HttpStatus.OK);
         }
+        else return  new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 
-        if (newStudent.getSpeciality() != null) {
-            student.setSpeciality(newStudent.getSpeciality());
-        }
-
-        if (newStudent.getFaculty() != null) {
-            student.setFaculty(newStudent.getFaculty());
-        }
-
-        return student;
     }
 
-    @Transactional
-    public void addSubject(Integer studentId, Long subjectId) {
-        Student student = studentRepository.findById(studentId)
-                .orElseThrow(StudentNotFoundException::new);
 
-        Subject subject = subjectRepository.findById(subjectId)
-                .orElseThrow(SubjectNotFoundException::new);
 
-        student.getSubjectsList().add(subject);
-    }
+
 }

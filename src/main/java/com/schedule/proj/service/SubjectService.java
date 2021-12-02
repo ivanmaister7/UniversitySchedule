@@ -78,15 +78,6 @@ public class SubjectService {
         return subjectRepository.count();
     }
 
-    @Transactional
-    public void setTeacher(Long subjectId, Long teacherId) {
-        Subject subject = subjectRepository.findById(subjectId)
-                .orElseThrow(SubjectNotFoundException::new);
 
-        Teacher teacher = teacherRepository.findById(teacherId)
-                .orElseThrow(SubjectNotFoundException::new);
-
-        subject.setSubjectTeacher(teacher);
-    }
 
 }

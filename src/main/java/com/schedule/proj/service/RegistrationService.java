@@ -42,6 +42,7 @@ public class RegistrationService {
         }
         user.setPassword(passwordService.encodePassword(userDTO.getPassword()));
 
+
         //add role and create record
         if(userDTO.getRole().equals("teacher")){
             Teacher teacher = new Teacher();

@@ -13,5 +13,6 @@ import java.util.Optional;
 import java.util.Set;
 
 @Repository
-public interface TeacherRepository extends JpaRepository<Teacher, Long> {
- }
+public interface TeacherRepository extends JpaRepository<Teacher, Integer> {
+    Teacher getByUserId(int id);
+}
