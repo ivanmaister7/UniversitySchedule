@@ -7,20 +7,24 @@ public class UserDTO {
 
     @NotNull
     @NotEmpty
-    private final String email;
+    private String email;
 
     @NotNull
     @NotEmpty
-    private final String password;
+    private String password;
 
     @NotNull
     @NotEmpty
-    private final String role;
+    private String role;
 
     public UserDTO(String email, String password, String role) {
         this.email = email;
         this.password = password;
         this.role = role;
+    }
+
+    public UserDTO() {
+
     }
 
     public String getEmail() {
@@ -33,5 +37,17 @@ public class UserDTO {
 
     public String getRole() {
         return role;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

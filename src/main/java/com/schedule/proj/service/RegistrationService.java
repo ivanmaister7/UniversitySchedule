@@ -41,9 +41,8 @@ public class RegistrationService {
             throw new RegistrationException("Password is not valid");
         }
         user.setPassword(passwordService.encodePassword(userDTO.getPassword()));
-
         //add role and create record
-        if(userDTO.getRole().equals("teacher")){
+        if(userDTO.getRole().equals("TEACHER")){
             Teacher teacher = new Teacher();
             user.setUserRole(UserRole.TEACHER);
             teacher.setUser(user);
