@@ -7,15 +7,14 @@ import com.schedule.proj.service.RegistrationService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
+@Controller
 @RequestMapping("/api/registration")
 public class RegistrationController {
 
@@ -27,11 +26,16 @@ public class RegistrationController {
         this.registrationService = registrationService;
     }
 
+    @GetMapping
+    public String createUserForm(Model model){
+        model.addAttribute("userDTO", new UserDTO());
+        return "user-create";
+    }
 
     //method for registration
     @Operation(summary = "method for registration")
     @PostMapping
-    ResponseEntity<?> registration(@RequestBody UserDTO userDTO){
+    ResponseEntity<?> registration(UserDTO userDTO){
 
         Map<String, String> res = new HashMap<>();
 
