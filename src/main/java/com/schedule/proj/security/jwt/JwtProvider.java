@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
@@ -33,7 +35,7 @@ public class JwtProvider {
         this.userRepository = userRepository;
     }
 
-    @Value("$(jwt.secret)")
+    @Value("$(jwt.secret)" + "1")
     private String jwtSecret;
     private String header="Authorization";
 
@@ -76,7 +78,9 @@ public class JwtProvider {
     }
 
     public String getTokenFromRequest(HttpServletRequest request) {
-        return request.getHeader(header);
+        Cookie cookie = WebUtils.getCookie(request, "Authorization");
+
+        return cookie == null ? request.getHeader(header) : cookie.getValue();
     }
 
     public Date getExpireDateFromToken(String token) {

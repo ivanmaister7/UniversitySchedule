@@ -17,7 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.AuthenticationException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,12 +45,17 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(LoginDTO request){
+    public ResponseEntity<?> login(LoginDTO request, HttpServletResponse response){
         Map<String, String> res = new HashMap<>();
         try {
             String token = authenticationService.login(request);
             res.put("message","You have successfully logged in");
             res.put("token", token);
+
+            Cookie cookie = new Cookie(HttpHeaders.AUTHORIZATION, token);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+
             HttpHeaders headers = new HttpHeaders();
             int userId = userService.findUserByEmail(request.getEmail()).getId();
             headers.add("Location", "/api/user/"+userId);
