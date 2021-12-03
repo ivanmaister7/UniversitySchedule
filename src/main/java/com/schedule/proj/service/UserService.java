@@ -26,7 +26,9 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUserById(Long userId) {
+
+   public Optional<User> getUserById(int userId) {
+
         return userRepository.findById(userId);
     }
 
@@ -59,10 +61,16 @@ public class UserService {
                     userRepository.save(userToUpdate);
 
 
+
                 } else {
                     throw new StudentNotFoundException("User with id = " + id + " not found");
                 }
                 return new ResponseEntity<String>(HttpStatus.OK);
             }
+
+
+    public  User findUserByEmail(String email){
+       return userRepository.findUserByEmail(email);
+    }
 
 }
