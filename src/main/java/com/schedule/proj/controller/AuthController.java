@@ -4,10 +4,13 @@ package com.schedule.proj.controller;
 import com.schedule.proj.exсeption.JwtAuthenticationException;
 import com.schedule.proj.model.DTO.LoginDTO;
 import com.schedule.proj.model.DTO.UserDTO;
+import com.schedule.proj.model.User;
 import com.schedule.proj.service.AuthenticationService;
 import com.schedule.proj.service.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,7 +49,13 @@ public class AuthController {
             String token = authenticationService.login(request);
             res.put("message","You have successfully logged in");
             res.put("token", token);
-            return ResponseEntity.ok(res);
+            HttpHeaders headers = new HttpHeaders();
+            int userId = userService.findUserByEmail(request.getEmail()).getId();
+            headers.add("Location", "/api/user/"+userId);
+            headers.add(HttpHeaders.AUTHORIZATION, token);
+            ResponseEntity<String> resEnt = new ResponseEntity<String>(headers, HttpStatus.FOUND);
+            return resEnt;
+            //return ResponseEntity.ok(res);
         }catch (AuthenticationException ex) {
             res.put("message", ex.getMessage());
             return ResponseEntity.badRequest().body(res);
