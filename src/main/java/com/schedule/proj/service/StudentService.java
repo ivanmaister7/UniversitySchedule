@@ -1,56 +1,43 @@
 package com.schedule.proj.service;
 
-import com.schedule.proj.exсeption.StudentNotFoundException;
-import com.schedule.proj.exсeption.SubjectNotFoundException;
+import com.schedule.proj.model.*;
 import com.schedule.proj.model.DTO.StudentGeneralResponseDTO;
-import com.schedule.proj.model.Student;
-import com.schedule.proj.model.Subject;
+import com.schedule.proj.model.DTO.TeachersSubjectDTO;
 
-import com.schedule.proj.model.User;
-import com.schedule.proj.model.UserRole;
 import com.schedule.proj.repository.StudentRepository;
 import com.schedule.proj.repository.SubjectRepository;
 import com.schedule.proj.repository.UserRepository;
 import com.schedule.proj.security.jwt.JwtProvider;
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 
 @Service
 @RequiredArgsConstructor
-public class StudentService
-{
+public class StudentService {
 
     private final StudentRepository studentRepository;
     private final SubjectRepository subjectRepository;
-  private final  JwtProvider jwtProvider;
+    private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
     private static final Logger logger = LogManager.getLogger();
     final static Marker MARKER_STUDENT = MarkerManager.getMarker("StudentService");
 
     public Student createStudent(Student student) {
         Student t = studentRepository.save(student);
-        ThreadContext.put("username",t.getUser().getFirstName() + " "+student.getUser().getLastName() );
-       // ThreadContext.put("ID", t.getUser().getUserId().toString());
-        logger.info(MARKER_STUDENT,"Create student");
+        ThreadContext.put("username", t.getUser().getFirstName() + " " + student.getUser().getLastName());
+        // ThreadContext.put("ID", t.getUser().getUserId().toString());
+        logger.info(MARKER_STUDENT, "Create student");
         ThreadContext.clearMap();
         return t;
     }
-
 
 
     public void deleteStudent(Student student) {
@@ -74,17 +61,15 @@ public class StudentService
     }
 
 
-
-
     public ResponseEntity<String> updateStudentByToken(StudentGeneralResponseDTO dto, HttpServletRequest request) {
-        int k=5;
+        int k = 5;
         String token = jwtProvider.getTokenFromRequest(request);
-        int b=5;
+        int b = 5;
         String email = jwtProvider.getLoginFromToken(token);
         User user = userRepository.findUserByEmail(email);
-        if(user.getUserRole() == UserRole.STUDENT && user!=null) {
+        if (user.getUserRole() == UserRole.STUDENT && user != null) {
             Student student = studentRepository.getByUserId(user.getId());
-            int i=5;
+            int i = 5;
             user.setFirstName(dto.getFirstname());
             user.setLastName(dto.getLastname());
             student.setStudentYear(dto.getStudentYear());
@@ -92,12 +77,30 @@ public class StudentService
             student.setSpeciality(dto.getSpeciality());
             studentRepository.save(student);
             return new ResponseEntity<String>(HttpStatus.OK);
-        }
-        else return  new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        } else return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 
     }
 
+    public Collection<? extends Object> createSmallMentorDTOFiltr(List<Subject> subjectList, Teacher teacher) {
+        List<Subject> teachersSubject = new ArrayList<>();
+        if (subjectList.size() > 0) {
+            if (teacher != null) {
+                for (Subject m : subjectList) {
+                    if (m.getSubjectTeacher().equals(teacher.getTeacherId())) {
+                        teachersSubject.add(m);
+                    } else {
 
+                    }
+                }
+            } else return (List<TeachersSubjectDTO>) new ResponseEntity<String>(HttpStatus.NOT_FOUND);;
+        }
 
-
+      return teachersSubject;
+    }
 }
+
+
+
+
+
+
