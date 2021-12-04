@@ -30,11 +30,7 @@ public class Student {
     @JoinColumn(name = "user_id")
     private User user;
 
-
-
     private String faculty;
-
-
 
     private String speciality;
 

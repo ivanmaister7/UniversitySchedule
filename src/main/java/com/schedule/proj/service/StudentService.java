@@ -32,7 +32,7 @@ public class StudentService {
 
     public Student createStudent(Student student) {
         Student t = studentRepository.save(student);
-        ThreadContext.put("username", t.getUser().getFirstName() + " " + student.getUser().getLastName());
+        //ThreadContext.put("username", t.getUser().getFirstName() + " " + student.getUser().getLastName());
         // ThreadContext.put("ID", t.getUser().getUserId().toString());
         logger.info(MARKER_STUDENT, "Create student");
         ThreadContext.clearMap();
