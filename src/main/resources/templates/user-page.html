@@ -8,7 +8,9 @@
 <body>
 <div class="container">
     <div class="row">
-        <h1 th:text="#{app.name}">
+        <h1>
+            <span th:if="${user.userRole == T(com.schedule.proj.model.UserRole).STUDENT}" th:text="#{app.name.student}"></span>
+            <span th:if="${user.userRole == T(com.schedule.proj.model.UserRole).TEACHER}" th:text="#{app.name.teacher}"></span>
         </h1>
     </div>
     <div class="d-flex justify-content-center">

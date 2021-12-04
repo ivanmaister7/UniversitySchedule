@@ -4,15 +4,19 @@ import com.schedule.proj.exсeption.StudentNotFoundException;
 import com.schedule.proj.model.DTO.StudentResponseDTO;
 import com.schedule.proj.model.User;
 import com.schedule.proj.repository.UserRepository;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UserService {
 
 
@@ -20,6 +24,7 @@ public class UserService {
     ApplicationEventPublisher applicationEventPublisher;
     @Autowired
     UserRepository userRepository;
+    @Autowired
     EmailService emailService;
 
     public List<User> getAllUsers() {
@@ -27,9 +32,8 @@ public class UserService {
     }
 
 
-   public Optional<User> getUserById(int userId) {
-
-        return userRepository.findById(userId);
+   public User getUserById(int userId) {
+        return userRepository.findOneById(userId);
     }
 
     public ResponseEntity<String> updateUser(User userToUpdate, StudentResponseDTO request) {

@@ -35,7 +35,7 @@ public class JwtProvider {
         this.userRepository = userRepository;
     }
 
-    @Value("$(jwt.secret)" + "1")
+    @Value("$(jwt.secret)")
     private String jwtSecret;
     private String header="Authorization";
 
