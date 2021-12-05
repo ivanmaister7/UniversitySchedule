@@ -26,14 +26,14 @@
                 </li>
                 <li class="nav-item">
                     <form action="#" th:action="@{/api/user/{id}/profile(id=${user.id})}" method="get">
-                        <button type="submit" class="btn btn-secondary">
+                        <button type="submit" class="btn btn-light">
                             Profile
                         </button>
                     </form>
                 </li>
                 <li class="nav-item">
                     <form action="#" th:action="@{/api/user/{id}/schedule(id=${user.id})}" method="get">
-                        <button type="submit" class="btn btn-light">
+                        <button type="submit" class="btn btn-secondary">
                             Schedule
                         </button>
                     </form>
@@ -50,34 +50,37 @@
     </nav>
     <br/>
     <br/>
+</div>
     <div th:if="${user.userRole == T(com.schedule.proj.model.UserRole).STUDENT}" class="d-flex flex-column justify-content-center">
-        <form action="#" th:action="@{/api/user/{id}/profile/edit(id=${user.id})}" th:object="${user.student}"  method="get">
-            <fieldset disabled>
-                <div class="form-group row">
-                    <label for="input1" class="col-sm-2 col-form-label">Faculty</label>
-                    <div class="col-sm-10">
-                        <input type="text" th:field="*{faculty}" class="form-control" id="input1" placeholder="-" th:text="${faculty}">
-                    </div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <div th:each = "day : ${days}">
+                    <th scope="col" colspan="3" th:text="${day}">day</th>
                 </div>
-                <div class="form-group row">
-                    <label for="input2" class="col-sm-2 col-form-label">Speciality</label>
-                    <div class="col-sm-10">
-                        <input type="text" th:field="*{speciality}" class="form-control" id="input2" placeholder="-" th:text="${speciality}">
-                    </div>
+
+            </tr>
+            <tr>
+                <th scope="col">#</th>
+                <div th:each = "day : ${days}">
+                    <th scope="col">Subject</th>
+                    <th scope="col">Group</th>
+                    <th scope="col">Teacher</th>
                 </div>
-                <div class="form-group row">
-                    <label for="input3" class="col-sm-2 col-form-label">Year</label>
-                    <div class="col-sm-10">
-                        <input type="text" th:field="*{studentYear}" class="form-control" id="input3" placeholder="-" th:text="${studentYear}">
-                    </div>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each = "slot : ${subjectsSlots}">
+                <th scope="row" th:text="${slot[__${0}__].subjectTime}"></th>
+                <div th:each = "subj : ${slot}">
+                        <td th:text="${subj.subjectName}">-</td>
+                        <td th:text="${subj.subjectGroup}">-</td>
+                        <td th:text="${subj.subjectTeacher?.user?.lastName}">-</td>
                 </div>
-            </fieldset>
-            <div class="d-flex justify-content-center form-group">
-                <button type="submit" class="btn btn-primary">
-                    Edit
-                </button>
-            </div>
-        </form>
+            </tr>
+            </tbody>
+        </table>
     </div>
     <div th:if="${user.userRole == T(com.schedule.proj.model.UserRole).TEACHER}" class="d-flex flex-column justify-content-center">
         <form action="#" th:action="@{/api/user/{id}/profile/edit(id=${user.id})}" th:object="${user.teacher}"  method="get">
@@ -109,7 +112,6 @@
         </form>
     </div>
 
-</div>
 
 </body>
 </html>

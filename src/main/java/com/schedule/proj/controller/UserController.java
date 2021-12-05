@@ -3,8 +3,10 @@ package com.schedule.proj.controller;
 
 import com.schedule.proj.model.DTO.StudentGeneralResponseDTO;
 import com.schedule.proj.model.Student;
+import com.schedule.proj.model.Subject;
 import com.schedule.proj.model.User;
 import com.schedule.proj.service.StudentService;
+import com.schedule.proj.service.SubjectService;
 import com.schedule.proj.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -31,6 +33,9 @@ public class UserController {
 
     @Autowired
     StudentService studentService;
+
+    @Autowired
+    SubjectService subjectService;
 
     @GetMapping("/{id}")
     public String getUserPage(@PathVariable("id")Long id, Model model){
@@ -69,7 +74,59 @@ public class UserController {
         return "redirect:/api/user/"+id.toString()+"/profile";
     }
 
+    @GetMapping("/{id}/add")
+    public String getUserPageAddSubject(@PathVariable("id")Long id, Model model){
+        model.addAttribute("user", userService.getUserById(id.intValue()));
+        model.addAttribute("subject", new Subject());
+        model.addAttribute("subjects", subjectService.getAllSubjects());
+        return "user-page-profile-add-subject";
+    }
 
+    @PostMapping("/{id}/add")
+    public String updateUserPageAddSubject(@ModelAttribute("subject") Subject subject,
+                                      @PathVariable("id")Long id, Model model){
+        model.addAttribute("user", userService.getUserById(id.intValue()));
+        model.addAttribute("subject", subject);
+        model.addAttribute("groups", subjectService.findByName(subject.getSubjectName())
+                .stream()
+                .map(Subject::getSubjectGroup)
+                .toArray());
+        return "user-page-profile-add-group";
+    }
+
+    @GetMapping("/{id}/add/group")
+    public String getUserPageAddGroup(@ModelAttribute("subject") Subject subject,
+                                      @PathVariable("id")Long id, Model model){
+        model.addAttribute("user", userService.getUserById(id.intValue()));
+        model.addAttribute("subject", subject);
+        model.addAttribute("groups", subjectService.findByName(subject.getSubjectName())
+                .stream()
+                .map(Subject::getSubjectGroup)
+                .toArray());
+        return "user-page-profile-add-group";
+    }
+
+    @PostMapping("/{id}/add/group")
+    public String updateUserSubject(@ModelAttribute("subject") Subject subject,
+                                            @PathVariable("id")Long id, Model model,
+                                            HttpServletRequest request){
+        //add rolled info to stud_subj table
+        return "redirect:/api/user/"+id.toString()+"/add";
+    }
+
+    @GetMapping("/{id}/schedule")
+    public String getUserSchedule(@PathVariable("id")Long id,
+                                  @RequestParam(required = false) String week,
+                                  Model model){
+        model.addAttribute("user", userService.getUserById(id.intValue()));
+        if(week == null){
+            model.addAttribute("weeks", new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15});
+            return "user-page-schedule";
+        }
+        model.addAttribute("subjectsSlots", subjectService.getSordetListByTime(subjectService.getAllSubjects()));
+        model.addAttribute("days", new String[]{"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"});
+        return "user-page-schedule-week";
+    }
 
 
 

@@ -26,7 +26,7 @@ public class Subject {
 
     @ManyToOne
     // todo: change to teacher_id
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "teacher_id")
     @JsonIgnore
     private Teacher subjectTeacher;
 
@@ -48,23 +48,23 @@ public class Subject {
     @Column(name="subject_time")
     private LocalTime subjectTime;
 
-    @NotNull
+    //@NotNull
     @ElementCollection
     private Collection<Integer> weeks;
 
-    @NotNull
+    //@NotNull
     @Column(name="subject_group")
     private Integer subjectGroup;
 
-    @NotNull
+   // @NotNull
     @Column(name="subject_faculty")
     private String subjectFaculty;
 
-    @NotNull
+    //@NotNull
     @Column(name="subject_speciality")
     private String subjectSpeciality;
 
-    @NotNull
+    //@NotNull
     @Column(name="education_format")
     private String educationFormat;
 
@@ -82,5 +82,13 @@ public class Subject {
     }
 
     public Subject() {
+    }
+
+    public Subject(Teacher subjectTeacher, @Size(min = 4, max = 200,
+            message = "Lesson name must be between 4 and 32 characters") String subjectName, @NotNull LocalTime subjectTime, Integer subjectGroup) {
+        this.subjectTeacher = subjectTeacher;
+        this.subjectName = subjectName;
+        this.subjectTime = subjectTime;
+        this.subjectGroup = subjectGroup;
     }
 }

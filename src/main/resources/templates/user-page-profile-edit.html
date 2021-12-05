@@ -32,14 +32,14 @@
                     </form>
                 </li>
                 <li class="nav-item">
-                    <form action="#" th:action="@{/api/user/{id}(id=${user.id})}" method="get">
+                    <form action="#" th:action="@{/api/user/{id}/schedule(id=${user.id})}" method="get">
                         <button type="submit" class="btn btn-light">
                             Schedule
                         </button>
                     </form>
                 </li>
-                <li class="nav-item">
-                    <form action="#" th:action="@{/api/user/{id}(id=${user.id})}" method="get">
+                <li th:if="${user.userRole == T(com.schedule.proj.model.UserRole).STUDENT}" class="nav-item">
+                    <form action="#" th:action="@{/api/user/{id}/add(id=${user.id})}" method="get">
                         <button type="submit" class="btn btn-light">
                             Add Subject
                         </button>

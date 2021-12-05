@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,6 +65,10 @@ public class SubjectService {
         return subject;
     }
 
+    public List<Subject> findByName(String name){
+        return subjectRepository.findAllBySubjectName(name);
+    }
+
     public void deleteSubject(Subject subject) {
         subjectRepository.delete(subject);
     }
@@ -78,6 +85,29 @@ public class SubjectService {
         return subjectRepository.count();
     }
 
+    public List<List<Subject>> getSordetListByTime(List<Subject> allSubj){
+        List<List<Subject>> res = new ArrayList<>();
+        String[] timeSlots = {"08:30","10:00","11:40","13:30","15:00","16:30","18:00"};
 
+        for(String timeSlot:timeSlots){
+            List<Subject> temp = new ArrayList<>();
+            DayOfWeek currentDay = DayOfWeek.MONDAY;
+            for (int i = 1; i <= 5; i++) {
+                for (Subject subj:allSubj) {
+                    if(subj.getSubjectTime().toString().equals(timeSlot)
+                            && subj.getDayOfWeek().equals(currentDay)){
+                        temp.add(subj);
+                        break;
+                    }
+                }
+                if(temp.size() != i){
+                    temp.add(new Subject(null,null, LocalTime.parse(timeSlot),null));
+                }
+                currentDay = currentDay.plus(1L);
+            }
+            res.add(temp);
+        }
+        return res;
+    }
 
 }
