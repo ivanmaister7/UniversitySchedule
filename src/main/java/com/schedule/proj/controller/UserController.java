@@ -1,12 +1,12 @@
 package com.schedule.proj.controller;
 
 
+import com.schedule.proj.model.*;
 import com.schedule.proj.model.DTO.StudentGeneralResponseDTO;
-import com.schedule.proj.model.Student;
-import com.schedule.proj.model.Subject;
-import com.schedule.proj.model.User;
+import com.schedule.proj.model.DTO.TeacherGeneralResponseDTO;
 import com.schedule.proj.service.StudentService;
 import com.schedule.proj.service.SubjectService;
+import com.schedule.proj.service.TeacherService;
 import com.schedule.proj.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -33,6 +33,9 @@ public class UserController {
 
     @Autowired
     StudentService studentService;
+
+    @Autowired
+    TeacherService teacherService;
 
     @Autowired
     SubjectService subjectService;
@@ -65,12 +68,22 @@ public class UserController {
             model.addAttribute("user", userService.getUserById(id.intValue()));
             return "user-page-profile-edit";
         }
-        Student st = user.getStudent();
-        studentService.updateStudentByToken(new StudentGeneralResponseDTO(null,
-                null,
-                st.getFaculty(),
-                st.getSpeciality(),
-                st.getStudentYear()), request );
+        if(userService.getUserById(id.intValue()).getUserRole().equals(UserRole.STUDENT)){
+            Student st = user.getStudent();
+            studentService.updateStudentByToken(new StudentGeneralResponseDTO(null,
+                    null,
+                    st.getFaculty(),
+                    st.getSpeciality(),
+                    st.getStudentYear()), request );
+        }else{
+            Teacher st = user.getTeacher();
+            teacherService.updateTeachertByToken(new TeacherGeneralResponseDTO(
+                    st.getFaculty(),
+                    st.getCathedra(),
+                    st.getRank(),
+                    null,
+                    null), request );
+        }
         return "redirect:/api/user/"+id.toString()+"/profile";
     }
 

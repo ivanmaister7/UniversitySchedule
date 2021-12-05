@@ -74,9 +74,9 @@ public class TeacherService {
         String email = jwtProvider.getLoginFromToken(token);
         User user = userRepository.findUserByEmail(email);
         if(user.getUserRole() == UserRole.TEACHER && user!=null) {
-            Teacher teacher = teacherRepository.getByUserId((long) user.getId());
-            user.setFirstName(dto.getFirstname());
-            user.setLastName(dto.getLastname());
+            Teacher teacher = teacherRepository.getByUserId(user.getId());
+            //user.setFirstName(dto.getFirstname());
+            //user.setLastName(dto.getLastname());
             teacher.setCathedra(dto.getCathedra());
             teacher.setFaculty(dto.getFaculty());
             teacher.setRank(dto.getRank());

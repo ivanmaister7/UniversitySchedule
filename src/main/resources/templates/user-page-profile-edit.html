@@ -87,7 +87,7 @@
         </form>
     </div>
     <div th:if="${user.userRole == T(com.schedule.proj.model.UserRole).TEACHER}" class="d-flex flex-column justify-content-center">
-        <form action="#" th:action="@{/api/user/{id}/profile/edit(id=${user.id})}" th:object="${user.teacher}"  method="post">
+        <form action="#" th:action="@{/api/user/{id}/profile/edit(id=${user.id})}" th:object="${user}"  method="post">
             <div class="form-group row">
                 <label for="input11" class="col-sm-2 col-form-label">Faculty</label>
                 <div class="col-sm-10">
