@@ -33,38 +33,38 @@ public class Subject {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="subject_id")
-    private Long subjectId;
+    private Integer subjectId;
 
     @Size(min = 4, max = 200,
             message = "Lesson name must be between 4 and 32 characters")
     @Column(name="subject_name")
     private String subjectName;
 
-    @NotNull
-    @Column(name="day_of_week")
+   // @NotNull
+  @Column(name="day_of_week")
     private DayOfWeek dayOfWeek;
 
-    @NotNull
-    @Column(name="subject_time")
+   // @NotNull
+   @Column(name="subject_time")
     private LocalTime subjectTime;
 
-    @NotNull
+  //  @NotNull
     @ElementCollection
     private Collection<Integer> weeks;
 
-    @NotNull
+   // @NotNull
     @Column(name="subject_group")
     private Integer subjectGroup;
 
-    @NotNull
+   // @NotNull
     @Column(name="subject_faculty")
     private String subjectFaculty;
 
-    @NotNull
+   // @NotNull
     @Column(name="subject_speciality")
     private String subjectSpeciality;
 
-    @NotNull
+  //  @NotNull
     @Column(name="education_format")
     private String educationFormat;
 
