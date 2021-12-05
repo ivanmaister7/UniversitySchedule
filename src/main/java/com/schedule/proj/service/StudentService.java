@@ -70,8 +70,8 @@ public class StudentService {
         if (user.getUserRole() == UserRole.STUDENT && user != null) {
             Student student = studentRepository.getByUserId(user.getId());
             int i = 5;
-            user.setFirstName(dto.getFirstname());
-            user.setLastName(dto.getLastname());
+            //user.setFirstName(dto.getFirstname());
+            //user.setLastName(dto.getLastname());
             student.setStudentYear(dto.getStudentYear());
             student.setFaculty(dto.getFaculty());
             student.setSpeciality(dto.getSpeciality());

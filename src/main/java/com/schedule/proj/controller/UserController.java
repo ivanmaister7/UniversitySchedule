@@ -1,6 +1,7 @@
 package com.schedule.proj.controller;
 
 
+import com.schedule.proj.model.DTO.StudentGeneralResponseDTO;
 import com.schedule.proj.model.Student;
 import com.schedule.proj.model.User;
 import com.schedule.proj.service.StudentService;
@@ -15,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
@@ -45,18 +47,25 @@ public class UserController {
     @GetMapping("/{id}/profile/edit")
     public String getUserPageProfileEdit(@PathVariable("id")Long id, Model model){
         model.addAttribute("user", userService.getUserById(id.intValue()));
+        model.addAttribute("years", new int[]{1, 2, 3, 4, 5, 6});
         return "user-page-profile-edit";
     }
 
     @PostMapping("/{id}/profile/edit")
     public String updateUserPageProfileEdit(@ModelAttribute("user") User user,
                                             @PathVariable("id")Long id, Model model,
+                                            HttpServletRequest request,
                                             BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             model.addAttribute("user", userService.getUserById(id.intValue()));
             return "user-page-profile-edit";
         }
-        studentService.createStudent(user.getStudent());
+        Student st = user.getStudent();
+        studentService.updateStudentByToken(new StudentGeneralResponseDTO(null,
+                null,
+                st.getFaculty(),
+                st.getSpeciality(),
+                st.getStudentYear()), request );
         return "redirect:/api/user/"+id.toString()+"/profile";
     }
 
