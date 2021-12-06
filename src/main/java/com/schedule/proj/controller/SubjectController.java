@@ -70,6 +70,11 @@ public class SubjectController {
         cooperationService.deleSybjectforStudent(request ,  subjectGroupDTO);
         return ResponseEntity.ok(subjectService.findStudentubjectByToken(request));
     }
+    @GetMapping("/subjectByWeek")
+    public ResponseEntity<?> findsubjectByWeek(HttpServletRequest request,@RequestParam(required = false) String week){
+        return ResponseEntity.ok(subjectService.findStudentubjectByTokenAndWeek( request , week));
+    }
+
 
 
 

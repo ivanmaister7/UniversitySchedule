@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -102,6 +103,20 @@ public class SubjectService {
         Student student = studentRepository.getByUserId(user.getId());
         return cooperationRepository.findAllByStudent_StudentId(student.getStudentId()).stream().map(Cooperation::getSubject).collect(Collectors.toList());
     }
+    public List<Subject> findStudentubjectByTokenAndWeek(HttpServletRequest request , String week) {
+        int i = Integer.parseInt(week);
+        String token = jwtProvider.getTokenFromRequest(request);
+        String email = jwtProvider.getLoginFromToken(token);
+        User user = userRepository.findUserByEmail(email);
+        Student student = studentRepository.getByUserId(user.getId());
+        List<Subject> copy =  cooperationRepository.findAllByStudent_StudentId(student.getStudentId()).stream().map(Cooperation::getSubject).collect(Collectors.toList());
+        List<Subject> res = new ArrayList<>();
+        for(Subject m : copy){
+                if(m.getWeeks().contains(i))
+                    res.add(m);
+           }
+        return res;
 
+    }
 
 }
