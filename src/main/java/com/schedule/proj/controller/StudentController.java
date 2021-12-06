@@ -52,4 +52,5 @@ public class StudentController {
             (HttpServletRequest req, @RequestBody StudentGeneralResponseDTO dto) {
         return studentService.updateStudentByToken(dto,req);
     }
+
 }

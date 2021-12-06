@@ -2,8 +2,6 @@ package com.schedule.proj.service;
 
 import com.schedule.proj.model.*;
 import com.schedule.proj.model.DTO.StudentGeneralResponseDTO;
-import com.schedule.proj.model.DTO.TeachersSubjectDTO;
-
 import com.schedule.proj.repository.StudentRepository;
 import com.schedule.proj.repository.SubjectRepository;
 import com.schedule.proj.repository.UserRepository;
@@ -81,22 +79,9 @@ public class StudentService {
 
     }
 
-    public Collection<? extends Object> createSmallMentorDTOFiltr(List<Subject> subjectList, Teacher teacher) {
-        List<Subject> teachersSubject = new ArrayList<>();
-        if (subjectList.size() > 0) {
-            if (teacher != null) {
-                for (Subject m : subjectList) {
-                    if (m.getSubjectTeacher().equals(teacher.getTeacherId())) {
-                        teachersSubject.add(m);
-                    } else {
 
-                    }
-                }
-            } else return (List<TeachersSubjectDTO>) new ResponseEntity<String>(HttpStatus.NOT_FOUND);;
-        }
 
-      return teachersSubject;
-    }
+
 }
 
 
