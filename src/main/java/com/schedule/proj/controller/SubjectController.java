@@ -1,8 +1,11 @@
 package com.schedule.proj.controller;
 
+import com.schedule.proj.model.DTO.SubjectGroupDTO;
 import com.schedule.proj.model.DTO.TeacherGeneralResponseDTO;
 import com.schedule.proj.model.Subject;
+import com.schedule.proj.repository.CooperationRepository;
 import com.schedule.proj.security.jwt.JwtProvider;
+import com.schedule.proj.service.CooperationService;
 import com.schedule.proj.service.SubjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ import java.util.List;
 @RequestMapping(path = "api/subject")
 public class SubjectController {
     private final SubjectService subjectService;
+    private final CooperationService cooperationService;
     @Autowired
     JwtProvider jwtProvider;
 
@@ -57,6 +61,16 @@ public class SubjectController {
 
         return ResponseEntity.ok(subjectService.findTeachersSubjectByToken(request));
     }
+    @GetMapping("/studentSubject")
+    public ResponseEntity<?> findTStudentSubjectByToken(HttpServletRequest request){
+        return ResponseEntity.ok(subjectService.findStudentubjectByToken(request));
+    }
+    @DeleteMapping("/deletetSubject")
+    public ResponseEntity<?> deleteSubjectByToken(HttpServletRequest request , @RequestBody SubjectGroupDTO subjectGroupDTO){
+        cooperationService.deleSybjectforStudent(request ,  subjectGroupDTO);
+        return ResponseEntity.ok(subjectService.findStudentubjectByToken(request));
+    }
+
 
 
 }

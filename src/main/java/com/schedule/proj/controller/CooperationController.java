@@ -22,20 +22,16 @@ public class CooperationController {
     @Autowired
     JwtProvider jwtProvider;
 
-   // @PreAuthorize("hasAuthority('STUDENT')")
+    // @PreAuthorize("hasAuthority('STUDENT')")
     @PostMapping("/cooperation")
-    public ResponseEntity<String> createCooperation(HttpServletRequest request , SubjectGroupDTO subjectGroupDTO){
-       try{
-           cooperationService.createCooperation(request , subjectGroupDTO);
-           return new ResponseEntity<String>(HttpStatus.OK);
-       }catch (RuntimeException e){
-           return new ResponseEntity<String>(e.getMessage(),HttpStatus.LOCKED);
-       }
+    public ResponseEntity<String> createCooperation(HttpServletRequest request, @RequestBody SubjectGroupDTO subjectGroupDTO) {
+        try {
+            cooperationService.createCooperation(request, subjectGroupDTO);
+            return new ResponseEntity<String>(HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.LOCKED);
+        }
     }
+}
 
-    @GetMapping("/showInformation/")
-    public  ResponseEntity<Boolean> showInformation(@PathVariable(value = "id")Integer id,HttpServletRequest request){
-        return ResponseEntity.ok(cooperationService.showInformation(request,id));
-    }
 
-   }

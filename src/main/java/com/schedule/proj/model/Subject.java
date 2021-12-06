@@ -12,6 +12,7 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 //@Component
 @Entity
@@ -26,9 +27,11 @@ public class Subject {
 
     @ManyToOne
     // todo: change to teacher_id
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "teacher_id")
     @JsonIgnore
     private Teacher subjectTeacher;
+
+
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -60,6 +63,7 @@ public class Subject {
     @Column(name="subject_faculty")
     private String subjectFaculty;
 
+
    // @NotNull
     @Column(name="subject_speciality")
     private String subjectSpeciality;
@@ -82,5 +86,8 @@ public class Subject {
     }
 
     public Subject() {
+    }
+    public Integer getSubjectId() {
+        return subjectId;
     }
 }

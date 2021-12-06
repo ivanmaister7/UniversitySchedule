@@ -1,15 +1,10 @@
 package com.schedule.proj.service;
 
 import com.schedule.proj.exсeption.SubjectNotFoundException;
+import com.schedule.proj.model.*;
 import com.schedule.proj.model.DTO.SubjectGroupDTO;
 import com.schedule.proj.model.DTO.TeacherGeneralResponseDTO;
-import com.schedule.proj.model.Subject;
-import com.schedule.proj.model.Teacher;
-import com.schedule.proj.model.User;
-import com.schedule.proj.model.UserRole;
-import com.schedule.proj.repository.SubjectRepository;
-import com.schedule.proj.repository.TeacherRepository;
-import com.schedule.proj.repository.UserRepository;
+import com.schedule.proj.repository.*;
 import com.schedule.proj.security.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.*;
@@ -22,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +26,9 @@ public class SubjectService {
     private final SubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
     private final JwtProvider jwtProvider;
+    private  final StudentRepository studentRepository;
     private final UserRepository userRepository;
+    private final CooperationRepository cooperationRepository;
     private static final Logger logger = LogManager.getLogger();
     final static Marker MARKER_SUBJECT = MarkerManager.getMarker("SubjectService");
 
@@ -95,11 +93,14 @@ public class SubjectService {
         User user = userRepository.findUserByEmail(email);
         Teacher teacher = teacherRepository.getByUserId(user.getId());
         return subjectRepository.findAllBySubjectTeacher(teacher);
-
     }
 
-    public Subject findSubject(SubjectGroupDTO dto){
-            return subjectRepository.findAllBySubjectGroupAndAndSubjectName(dto.getGroup(),dto.getSubjectname());
+    public List<Subject> findStudentubjectByToken(HttpServletRequest request) {
+        String token = jwtProvider.getTokenFromRequest(request);
+        String email = jwtProvider.getLoginFromToken(token);
+        User user = userRepository.findUserByEmail(email);
+        Student student = studentRepository.getByUserId(user.getId());
+        return cooperationRepository.findAllByStudent_StudentId(student.getStudentId()).stream().map(Cooperation::getSubject).collect(Collectors.toList());
     }
 
 
