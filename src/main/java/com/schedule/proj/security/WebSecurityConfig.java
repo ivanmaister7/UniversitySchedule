@@ -51,7 +51,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                                                  "/api/registration",
                                                             "/api/auth/login",
                         "/api/student/UpdateStudent/",
-                        "/api/teacher/UpdateTeacher/"
+                        "/api/teacher/UpdateTeacher/",
+                        "/api/subject" ,
+                        "/api/Cooperation/cooperation",
+                         "/api/admin/addBD"
 
 
                                                  ).permitAll()

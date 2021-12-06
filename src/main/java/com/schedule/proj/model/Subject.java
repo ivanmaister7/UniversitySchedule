@@ -12,6 +12,7 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 //@Component
 @Entity
@@ -33,26 +34,26 @@ public class Subject {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="subject_id")
-    private Long subjectId;
+    private Integer subjectId;
 
     @Size(min = 4, max = 200,
             message = "Lesson name must be between 4 and 32 characters")
     @Column(name="subject_name")
     private String subjectName;
 
-    @NotNull
-    @Column(name="day_of_week")
+   // @NotNull
+  @Column(name="day_of_week")
     private DayOfWeek dayOfWeek;
 
-    @NotNull
-    @Column(name="subject_time")
+   // @NotNull
+   @Column(name="subject_time")
     private LocalTime subjectTime;
 
-    //@NotNull
+  //  @NotNull
     @ElementCollection
     private Collection<Integer> weeks;
 
-    //@NotNull
+   // @NotNull
     @Column(name="subject_group")
     private Integer subjectGroup;
 
@@ -64,7 +65,7 @@ public class Subject {
     @Column(name="subject_speciality")
     private String subjectSpeciality;
 
-    //@NotNull
+  //  @NotNull
     @Column(name="education_format")
     private String educationFormat;
 
@@ -82,6 +83,9 @@ public class Subject {
     }
 
     public Subject() {
+    }
+    public Integer getSubjectId() {
+        return subjectId;
     }
 
     public Subject(Teacher subjectTeacher, @Size(min = 4, max = 200,
