@@ -18,7 +18,3 @@ INSERT INTO SUBJECT (subject_name,day_of_week,subject_time, subject_group, teach
 ('МООП',1,'10:00:00',1, 2);
 INSERT INTO SUBJECT (subject_name,day_of_week,subject_time, subject_group, teacher_id) VALUES
 ('МООП',2,'08:30:00',3, 2);
-
-
-
-
