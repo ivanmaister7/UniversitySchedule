@@ -20,7 +20,7 @@ import java.util.Set;
 //@NoArgsConstructor
 //@AllArgsConstructor
 @Data
-public class Subject {
+public class Subject implements Comparable<Subject> {
     @JsonIgnore
     @ManyToMany(mappedBy = "subjectsList", cascade = CascadeType.ALL)
     private List<Student> studentsList;
@@ -94,5 +94,10 @@ public class Subject {
         this.subjectName = subjectName;
         this.subjectTime = subjectTime;
         this.subjectGroup = subjectGroup;
+    }
+
+    @Override
+    public int compareTo(Subject subject) {
+        return this.subjectName.compareTo(subject.getSubjectName());
     }
 }

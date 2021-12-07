@@ -95,17 +95,9 @@ public class SubjectService {
         return subjectRepository.count();
     }
 
-    public List<List<Subject>> getSordetListByTime(List<Subject> allSubj){
+    public List<List<Subject>> getSordetListByTime(List<Subject> allSubj) {
         List<List<Subject>> res = new ArrayList<>();
-        String[] timeSlots = {"08:30","10:00","11:40","13:30","15:00","16:30","18:00"};
-    public List<Subject> findTeachersSubjectByToken(HttpServletRequest request) {
-        String token = jwtProvider.getTokenFromRequest(request);
-        String email = jwtProvider.getLoginFromToken(token);
-        User user = userRepository.findUserByEmail(email);
-        Teacher teacher = teacherRepository.getByUserId(user.getId());
-        return subjectRepository.findAllBySubjectTeacher(teacher);
-    }
-
+        String[] timeSlots = {"08:30", "10:00", "11:40", "13:30", "15:00", "16:30", "18:00"};
         for(String timeSlot:timeSlots){
             List<Subject> temp = new ArrayList<>();
             DayOfWeek currentDay = DayOfWeek.MONDAY;
@@ -126,6 +118,15 @@ public class SubjectService {
         }
         return res;
     }
+
+    public List<Subject> findTeachersSubjectByToken(HttpServletRequest request) {
+        String token = jwtProvider.getTokenFromRequest(request);
+        String email = jwtProvider.getLoginFromToken(token);
+        User user = userRepository.findUserByEmail(email);
+        Teacher teacher = teacherRepository.getByUserId(user.getId());
+        return subjectRepository.findAllBySubjectTeacher(teacher);
+    }
+
     public List<Subject> findStudentubjectByToken(HttpServletRequest request) {
         String token = jwtProvider.getTokenFromRequest(request);
         String email = jwtProvider.getLoginFromToken(token);
@@ -133,7 +134,8 @@ public class SubjectService {
         Student student = studentRepository.getByUserId(user.getId());
         return cooperationRepository.findAllByStudent_StudentId(student.getStudentId()).stream().map(Cooperation::getSubject).collect(Collectors.toList());
     }
-    public List<Subject> findStudentubjectByTokenAndWeek(HttpServletRequest request , String week) {
+
+    public List<Subject> findStudentSubjectByTokenAndWeek(HttpServletRequest request , String week) {
         int i = Integer.parseInt(week);
         String token = jwtProvider.getTokenFromRequest(request);
         String email = jwtProvider.getLoginFromToken(token);
@@ -145,6 +147,22 @@ public class SubjectService {
                 if(m.getWeeks().contains(i))
                     res.add(m);
            }
+        return res;
+
+    }
+
+    public List<Subject> findTeacherSubjectByTokenAndWeek(HttpServletRequest request , String week) {
+        int i = Integer.parseInt(week);
+        String token = jwtProvider.getTokenFromRequest(request);
+        String email = jwtProvider.getLoginFromToken(token);
+        User user = userRepository.findUserByEmail(email);
+        Teacher teacher = teacherRepository.getByUserId(user.getId());
+        List<Subject> copy =  subjectRepository.findAllBySubjectTeacher(teacher);
+        List<Subject> res = new ArrayList<>();
+        for(Subject m : copy){
+            if(m.getWeeks().contains(i))
+                res.add(m);
+        }
         return res;
 
     }

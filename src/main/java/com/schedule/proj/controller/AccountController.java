@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping()
 public class AccountController {
 
-//    @GetMapping("/")
-//    public String validateUserForm(){
-//        return "redirect:/api/auth/login";
-//    }
+    @GetMapping("/")
+    public String validateUserForm(){
+        return "redirect:/api/auth/login";
+    }
 }
