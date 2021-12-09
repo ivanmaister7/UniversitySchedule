@@ -5,6 +5,8 @@ import com.schedule.proj.exсeption.JwtAuthenticationException;
 import com.schedule.proj.model.DTO.LoginDTO;
 import com.schedule.proj.model.DTO.UserDTO;
 import com.schedule.proj.model.User;
+import com.schedule.proj.security.jwt.CustomUserDetails;
+import com.schedule.proj.security.jwt.cache.CurrentUser;
 import com.schedule.proj.service.AuthenticationService;
 import com.schedule.proj.service.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -75,7 +77,13 @@ public class AuthController {
         }
 
     }
-
+    @PutMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request, @CurrentUser CustomUserDetails user){
+        Map<String, String> res = new HashMap<>();
+        String message = authenticationService.logout(request, user);
+        res.put("message", message);
+        return ResponseEntity.ok(res);
+    }
 
     @PostMapping("/check")
     public ResponseEntity<?> checkTokenExpire(@RequestBody Map<String,String> request){
