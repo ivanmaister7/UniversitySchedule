@@ -22,8 +22,9 @@ public class EmailService {
     JavaMailSender emailSender;
 
 
-    public EmailService(UserRepository userRepository) {
+    public EmailService(UserRepository userRepository,  JavaMailSender    emailSender) {
         this.userRepository = userRepository;
+        this.emailSender= emailSender;
     }
 
     //check user email is existing in database
