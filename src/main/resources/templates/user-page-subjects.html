@@ -74,11 +74,9 @@
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <div th:text="${subj.subjectName}">-</div>
                 <span class="badge badge-primary badge-pill" th:text="${subj.subjectGroup}" >-</span>
-                <form action="#" th:action="@{/api/user/login}" method="get">
-                    <button type="submit" class="btn btn-danger">
+                    <a th:href = "@{/api/user/{id1}/deleteSubject/{id2}(id1=${user.id}, id2=${subj.subjectId})}" class="btn btn-danger">
                         X
-                    </button>
-                </form>
+                    </a>
             </li>
         </div>
     </ul>

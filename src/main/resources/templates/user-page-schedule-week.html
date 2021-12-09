@@ -45,6 +45,13 @@
                         </button>
                     </form>
                 </li>
+                <li th:if="${user.userRole == T(com.schedule.proj.model.UserRole).STUDENT}" class="nav-item">
+                    <form action="#" th:action="@{/api/user/{id}/subjects(id=${user.id})}" method="get">
+                        <button type="submit" class="btn btn-light">
+                            Subjects
+                        </button>
+                    </form>
+                </li>
             </ul>
             <div class="justify-content-end">
                 <form action="#" th:action="@{/api/user/login}" method="get">

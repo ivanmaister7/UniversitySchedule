@@ -162,17 +162,19 @@ public class UserController {
                                      HttpServletRequest request){
         model.addAttribute("user", userService.getUserById(id.intValue()));
         model.addAttribute("subjects", subjectService.findStudentubjectByToken(request));
-        //model.addAttribute("subjectDTO", new SubjectGroupDTO());
+        //model.addAttribute("subjectDTO", new SubjectGroupDTO(null,null));
         return "user-page-subjects";
     }
-//
-//    @DeleteMapping("/{id}/deleteSubject")
-//    public String deleteSubjectByToken(@PathVariable("id")Long id,
-//                                       @ModelAttribute("subjectDTO") SubjectGroupDTO subjectGroupDTO,
-//                                       Model model, HttpServletRequest request) {
-//        cooperationService.deleSybjectforStudent(request , subjectGroupDTO);
-//        return "redirect:/api/user/"+id.toString()+"/subjects";
-//    }
+
+    @GetMapping("/{id1}/deleteSubject/{id2}")
+    public String deleteSubjectByToken(@PathVariable("id1")Long uid,
+                                       @PathVariable("id2")Long sid,
+                                       Model model, HttpServletRequest request) {
+        Subject s = subjectService.getSubject(sid.intValue());
+        SubjectGroupDTO subjectGroupDTO = new SubjectGroupDTO(s.getSubjectGroup(),s.getSubjectName());
+        cooperationService.deleSybjectforStudent(request , subjectGroupDTO);
+        return "redirect:/api/user/"+uid.toString()+"/subjects";
+    }
 
 
 
