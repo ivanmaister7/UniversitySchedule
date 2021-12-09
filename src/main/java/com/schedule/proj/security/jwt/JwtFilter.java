@@ -40,7 +40,7 @@ JwtFilter extends GenericFilterBean {
             System.out.println(e.getMessage());
         }
 
-        // filterChain.doFilter(servletRequest, servletResponse);
+         filterChain.doFilter(servletRequest, servletResponse);
     }
 
 

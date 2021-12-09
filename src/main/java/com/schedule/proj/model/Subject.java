@@ -21,10 +21,6 @@ import java.util.Set;
 //@AllArgsConstructor
 @Data
 public class Subject {
-    @JsonIgnore
-    @ManyToMany(mappedBy = "subjectsList", cascade = CascadeType.ALL)
-    private List<Student> studentsList;
-
     @ManyToOne
     // todo: change to teacher_id
     @JoinColumn(name = "teacher_id")
