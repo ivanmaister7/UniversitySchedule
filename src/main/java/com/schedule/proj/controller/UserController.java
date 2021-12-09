@@ -156,7 +156,23 @@ public class UserController {
         return "user-page-schedule-week";
     }
 
-
+    @GetMapping("/{id}/subjects")
+    public String getUserAllSubjects(@PathVariable("id")Long id,
+                                     Model model,
+                                     HttpServletRequest request){
+        model.addAttribute("user", userService.getUserById(id.intValue()));
+        model.addAttribute("subjects", subjectService.findStudentubjectByToken(request));
+        //model.addAttribute("subjectDTO", new SubjectGroupDTO());
+        return "user-page-subjects";
+    }
+//
+//    @DeleteMapping("/{id}/deleteSubject")
+//    public String deleteSubjectByToken(@PathVariable("id")Long id,
+//                                       @ModelAttribute("subjectDTO") SubjectGroupDTO subjectGroupDTO,
+//                                       Model model, HttpServletRequest request) {
+//        cooperationService.deleSybjectforStudent(request , subjectGroupDTO);
+//        return "redirect:/api/user/"+id.toString()+"/subjects";
+//    }
 
 
 

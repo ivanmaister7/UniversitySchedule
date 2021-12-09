@@ -1,6 +1,5 @@
 package com.schedule.proj.service;
 
-import com.schedule.proj.config.NaukmaCacheManager;
 import com.schedule.proj.exсeption.StudentNotFoundException;
 import com.schedule.proj.model.DTO.StudentResponseDTO;
 import com.schedule.proj.model.Student;
@@ -33,8 +32,7 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     EmailService emailService;
-    @Autowired
-    NaukmaCacheManager naukmaCacheManager;
+
 
     public UserService() {
 
@@ -44,15 +42,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    @Cacheable(value = "user")
     public User getUserById(int userId) {
-        logger.info("No cache info for user with id = {}", userId);
         return userRepository.findOneById(userId);
-    }
-
-    @CacheEvict(value = "user", allEntries = true)
-    public void evictAllUsers() {
-        naukmaCacheManager.evictAllCacheValues("user");
     }
 
 
