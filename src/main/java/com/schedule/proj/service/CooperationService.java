@@ -51,14 +51,6 @@ public class CooperationService {
         return  "Student add this subject";
     }
 
-
-
-    public Boolean showInformation(HttpServletRequest request,int subjectId){
-        String token = jwtProvider.getTokenFromRequest(request);
-        String email = jwtProvider.getLoginFromToken(token);
-        Student student = studentRepository.getById(userRepository.findUserByEmail(email).getId());
-        return (checkInfo(student.getStudentId(),subjectId));
-    }
     public Boolean checkInfo(int sudentId,int subjectId){
         Cooperation cooperation = cooperationRepository.coopIsPresent(sudentId,subjectId);
         if(cooperation == null)  return false;
@@ -66,7 +58,6 @@ public class CooperationService {
             return true;
         else return false;
     }
-
 
 
     public void deleSybjectforStudent(HttpServletRequest request, SubjectGroupDTO dto) {
