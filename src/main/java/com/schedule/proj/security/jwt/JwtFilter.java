@@ -17,7 +17,8 @@ import java.io.IOException;
 
 
 @Component
-public class JwtFilter extends GenericFilterBean {
+public class
+JwtFilter extends GenericFilterBean {
 
     @Autowired
     private JwtProvider jwtProvider;
@@ -39,7 +40,7 @@ public class JwtFilter extends GenericFilterBean {
             System.out.println(e.getMessage());
         }
 
-        filterChain.doFilter(servletRequest, servletResponse);
+        // filterChain.doFilter(servletRequest, servletResponse);
     }
 
 
