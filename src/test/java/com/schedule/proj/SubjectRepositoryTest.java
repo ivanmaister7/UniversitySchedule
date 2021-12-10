@@ -15,12 +15,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class SubjectRepositoryTest {
 
     @Autowired
-    private UserRepository userRepository;
     private SubjectRepository subjectRepository;
     @Test
     public void getStudentTest() {
         var subject = subjectRepository.getBySubjectId(1);
-        Assert.assertEquals(subject.getSubjectName(),"SoftwareEngineer");
+        Assert.assertEquals(subject.getSubjectName(),"Spring");
     }
 
 }

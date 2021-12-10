@@ -15,12 +15,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class TeacherRepositoryTest {
 
     @Autowired
-    private UserRepository userRepository;
     private TeacherRepository teacherRepository;
+
     @Test
     public void getTeacherTest() {
-        var teacher = teacherRepository.getByUserId(1);
-        Assert.assertEquals(teacher.getCathedra(),"Myltimedia");
+        var teacher = teacherRepository.getById(1);
+        Assert.assertEquals(teacher.getUser().getId(),2);
     }
 
 }

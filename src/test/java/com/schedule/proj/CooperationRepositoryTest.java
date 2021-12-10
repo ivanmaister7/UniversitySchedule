@@ -15,42 +15,32 @@ import com.schedule.proj.service.RegistrationService;
 import com.schedule.proj.service.UserService;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-@WebMvcTest(AuthController.class)
+@RunWith(SpringRunner.class)
+@DataJpaTest
 public class CooperationRepositoryTest {
-    @MockBean
-    private AuthenticationService authenticationService;
-    @MockBean
-    private RegistrationService registrationService;
-    @MockBean
-    private UserService userService;
-    @MockBean
-    private JwtProvider jwtProvider;
-    @MockBean
-    private CustomUserDetailsService customUserDetailsService;
-    @MockBean
-    private JwtConfigurer jwtConfigurer;
-    @Autowired
-    private MockMvc mockMvc;
-
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
     private CooperationRepository cooperationRepository;
+
     @Test
     public void getCooperationTest() {
         var cooperation = cooperationRepository.coopIsPresent(1,1);
-        Assert.assertEquals(cooperation.getStatus(),"true");
+        Assert.assertEquals(cooperation.getStatus(),true);
     }
 
 }

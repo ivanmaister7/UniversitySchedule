@@ -14,18 +14,18 @@ import org.springframework.test.context.junit4.SpringRunner;
 @DataJpaTest
 public class StudentRepositoryTest {
 
+
     @Autowired
-    private UserRepository userRepository;
     private StudentRepository studentRepository;
     @Test
     public void getStudentSpecialityTest() {
-        var student = studentRepository.getByUserId(4);
+        var student = studentRepository.getByUserId(1);
         Assert.assertEquals(student.getSpeciality(),"SoftwareEngineer");
     }
     @Test
     public void getStudentTest() {
         var student = studentRepository.getById(1);
-        Assert.assertEquals(student.getStudentYear(),"2");
+        Assert.assertEquals(student.getStudentYear().toString(),"2");
 
     }
 }
