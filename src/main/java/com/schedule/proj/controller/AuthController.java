@@ -78,11 +78,11 @@ public class AuthController {
 
     }
     @PutMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletRequest request, @CurrentUser CustomUserDetails user){
-        Map<String, String> res = new HashMap<>();
+    public String logout(HttpServletRequest request){
+        User u = userService.getUserByRequest(request);
+        CustomUserDetails user = CustomUserDetails.fromUserEntityToCustomUserDetails(u);
         String message = authenticationService.logout(request, user);
-        res.put("message", message);
-        return ResponseEntity.ok(res);
+        return "redirect:/api/auth/login";
     }
 
     @PostMapping("/check")
@@ -96,6 +96,12 @@ public class AuthController {
             res.put("message",e.getMessage());
             return ResponseEntity.status(401).body(res);
         }
+    }
+
+    @GetMapping("/reset")
+    public String resetPassword(Model model){
+        model.addAttribute("loginDTO", new LoginDTO());
+        return "user-reset";
     }
 
 }

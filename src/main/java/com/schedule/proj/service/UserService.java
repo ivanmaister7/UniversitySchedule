@@ -53,6 +53,11 @@ public class UserService {
         return userRepository.findOneById(userId);
     }
 
+    public User getUserByRequest(HttpServletRequest request) {
+        String token = jwtProvider.getTokenFromRequest(request);
+        String email =jwtProvider.getLoginFromToken(token);
+        return userRepository.findUserByEmail(email);
+    }
 
     public ResponseEntity<String> updateUser(User userToUpdate, StudentResponseDTO request) {
         String emailNew = request.getEmail();
