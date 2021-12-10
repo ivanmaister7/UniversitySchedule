@@ -2,11 +2,9 @@ package com.schedule.proj.controller;
 
 
 import com.schedule.proj.exсeption.RegistrationException;
-import com.schedule.proj.model.DTO.PasswordDTO;
-import com.schedule.proj.model.DTO.StudentGeneralResponseDTO;
-import com.schedule.proj.model.DTO.SubjectGroupDTO;
-import com.schedule.proj.model.DTO.TeacherGeneralResponseDTO;
+import com.schedule.proj.model.DTO.*;
 import com.schedule.proj.model.*;
+import com.schedule.proj.security.jwt.CustomUserDetails;
 import com.schedule.proj.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +40,9 @@ public class UserController {
 
     @Autowired
     CooperationService cooperationService;
+
+    @Autowired
+    AuthenticationService authenticationService;
 
     @GetMapping("/{id}")
     public String getUserPage(@PathVariable("id")Long id, Model model){
@@ -112,18 +113,6 @@ public class UserController {
         return "user-page-profile-add-group";
     }
 
-//    @GetMapping("/{id}/add/group")
-//    public String getUserPageAddGroup(@ModelAttribute("subject") Subject subject,
-//                                      @PathVariable("id")Long id, Model model){
-//        model.addAttribute("user", userService.getUserById(id.intValue()));
-//        model.addAttribute("subject", subject);
-//        model.addAttribute("groups", subjectService.findByName(subject.getSubjectName())
-//                .stream()
-//                .map(Subject::getSubjectGroup)
-//                .toArray());
-//        return "user-page-profile-add-group";
-//    }
-
     @PostMapping("/{id}/add/group")
     public String updateUserSubject(@ModelAttribute("subject") Subject subject,
                                             @PathVariable("id")Long id, Model model,
@@ -164,6 +153,7 @@ public class UserController {
     public String getUserAllSubjects(@PathVariable("id")Long id,
                                      Model model,
                                      HttpServletRequest request){
+
         model.addAttribute("user", userService.getUserById(id.intValue()));
         model.addAttribute("subjects", subjectService.findStudentubjectByToken(request));
         //model.addAttribute("subjectDTO", new SubjectGroupDTO(null,null));
@@ -180,19 +170,27 @@ public class UserController {
         return "redirect:/api/user/"+uid.toString()+"/subjects";
     }
 
-    @Operation(summary = "change password")
-    @PutMapping("/changePassword")
-    ResponseEntity<?> changePassword(@RequestBody PasswordDTO dto,
-                                     HttpServletRequest request) {
+    @GetMapping("{id}/changePassword")
+    public String changePasswordPassword(@ModelAttribute("loginDTO") PasswordDTO passwordDTO,
+                                         Model model, @PathVariable Long id){
+        model.addAttribute("user", userService.getUserById(id.intValue()));
+        model.addAttribute("passwordDTO", passwordDTO);
+        return "user-page-reset-password";
+    }
 
-        Map<String, String> res = new HashMap<>();
+    //@Operation(summary = "change password")
+    @PostMapping("{id}/changePassword")
+    public String changePassword(@PathVariable Long id,
+                                 @ModelAttribute("passwordDTO") PasswordDTO dto,
+                                 HttpServletRequest request ) {
         try {
-            String result = userService.changePassword(request, dto.getOldPassword(), dto.getNewPassword());
-            res.put("message", result);
-            return ResponseEntity.ok(res);
+            userService.changePassword(request, dto.getOldPassword(), dto.getNewPassword());
+            User u = userService.getUserByRequest(request);
+            CustomUserDetails user = CustomUserDetails.fromUserEntityToCustomUserDetails(u);
+            String message = authenticationService.logout(request, user);
+            return "redirect:/api/auth/login";
         } catch (RegistrationException | UsernameNotFoundException e) {
-            res.put("message", e.getMessage());
-            return ResponseEntity.badRequest().body(res);
+            return "user-page-reset-password";
         }
     }
 

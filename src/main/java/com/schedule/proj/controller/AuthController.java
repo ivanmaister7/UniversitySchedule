@@ -47,12 +47,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@ModelAttribute("loginDTO")LoginDTO loginDTO, HttpServletResponse response){
+    public String login(@ModelAttribute("loginDTO")LoginDTO loginDTO,
+                                   HttpServletResponse response){
         Map<String, String> res = new HashMap<>();
         try {
             String token = authenticationService.login(loginDTO);
-            //res.put("message","You have successfully logged in");
-            //res.put("token", token);
 
             int userId = userService.findUserByEmail(loginDTO.getEmail()).getId();
             String path = "/api/user/"+userId;
@@ -61,19 +60,22 @@ public class AuthController {
             cookie.setPath(path);
             response.addCookie(cookie);
 
-            HttpHeaders headers = new HttpHeaders();
+//            HttpHeaders headers = new HttpHeaders();
+//
+//            headers.add("Location",path );
+//            headers.add(HttpHeaders.AUTHORIZATION, token);
+//            ResponseEntity<String> resEnt = new ResponseEntity<String>(headers, HttpStatus.FOUND);
 
-            headers.add("Location",path );
-            headers.add(HttpHeaders.AUTHORIZATION, token);
-            ResponseEntity<String> resEnt = new ResponseEntity<String>(headers, HttpStatus.FOUND);
-            return resEnt;
+            return "redirect:" + path;
             //return ResponseEntity.ok(res);
         }catch (AuthenticationException ex) {
-            res.put("message", ex.getMessage());
-            return ResponseEntity.badRequest().body(res);
+            //res.put("message", ex.getMessage());
+            //return ResponseEntity.badRequest().body(res);
+            return "user-login";
         }catch (Exception exception) {
             exception.printStackTrace();
-            return ResponseEntity.badRequest().body(res);
+            return "user-login";
+            //return ResponseEntity.badRequest().body(res);
         }
 
     }
