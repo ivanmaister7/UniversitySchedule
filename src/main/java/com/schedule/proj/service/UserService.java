@@ -37,9 +37,10 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     EmailService emailService;
+    @Autowired
     PasswordService passwordService;
+    @Autowired
     JwtProvider jwtProvider;
-
 
     public UserService() {
 
