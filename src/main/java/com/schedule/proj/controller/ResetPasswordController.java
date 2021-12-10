@@ -47,8 +47,13 @@ public class ResetPasswordController {
     @Operation(summary = "send security test email")
     @GetMapping("/sendSecurityEmail")
     public String sendSecurityEmail(@ModelAttribute("loginDTO") LoginDTO loginDTO) throws MessagingException {
-        resetPasswordService.chekemail(loginDTO.getEmail());
-        return "redirect:/api/auth/login";
+       if(userService.getUserByEmail(loginDTO.getEmail())!=null) {
+           resetPasswordService.chekemail(loginDTO.getEmail());
+           return "redirect:/api/auth/login";
+       }
+        else{
+           return "redirect:/api/auth/reset";
+        }
     }
 
 }
