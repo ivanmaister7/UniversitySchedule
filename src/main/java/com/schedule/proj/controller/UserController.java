@@ -7,6 +7,7 @@ import com.schedule.proj.model.*;
 import com.schedule.proj.security.jwt.CustomUserDetails;
 import com.schedule.proj.service.*;
 import io.swagger.v3.oas.annotations.Operation;
+import org.apache.xmlbeans.impl.xb.xsdschema.Attribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,10 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
 
 @Controller
@@ -153,10 +151,16 @@ public class UserController {
     public String getUserAllSubjects(@PathVariable("id")Long id,
                                      Model model,
                                      HttpServletRequest request){
-
-        model.addAttribute("user", userService.getUserById(id.intValue()));
-        model.addAttribute("subjects", subjectService.findStudentubjectByToken(request));
-        //model.addAttribute("subjectDTO", new SubjectGroupDTO(null,null));
+        User user = userService.getUserByRequest(request);
+        List<Subject> subjc = new ArrayList<>();
+        if (user.getUserRole().equals(UserRole.STUDENT)){
+            subjc = subjectService.findStudentubjectByToken(request);
+        }
+        else {
+            subjc = subjectService.findTeachersSubjectByToken(request);
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("subjects",subjc);
         return "user-page-subjects";
     }
 

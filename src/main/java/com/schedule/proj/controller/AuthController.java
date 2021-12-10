@@ -34,11 +34,6 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-//
-//    public AuthController(AuthenticationService authenticationService, UserService userService) {
-//        this.authenticationService = authenticationService;
-//        this.userService = userService;
-//    }
 
     @GetMapping("/login")
     public String loginUserForm(@ModelAttribute("loginDTO")LoginDTO loginDTO, Model model){
@@ -79,7 +74,7 @@ public class AuthController {
         }
 
     }
-    @PutMapping("/logout")
+    @PostMapping("/logout")
     public String logout(HttpServletRequest request){
         User u = userService.getUserByRequest(request);
         CustomUserDetails user = CustomUserDetails.fromUserEntityToCustomUserDetails(u);

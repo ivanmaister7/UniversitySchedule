@@ -46,7 +46,7 @@
                         </button>
                     </form>
                 </li>
-                <li th:if="${user.userRole == T(com.schedule.proj.model.UserRole).STUDENT}" class="nav-item">
+                <li class="nav-item">
                     <form action="#" th:action="@{/api/user/{id}/subjects(id=${user.id})}" method="get">
                         <button type="submit" class="btn btn-secondary">
                             Subjects
@@ -78,8 +78,8 @@
                 Subject
             </div>
             <span class="badge badge-primary badge-pill">Group</span>
-            <form action="#" th:action="@{/api/user/login}" method="get">
-                <div th:if="${user.userRole == T(com.schedule.proj.model.UserRole).STUDENT}">
+            <form th:if="${user.userRole == T(com.schedule.proj.model.UserRole).STUDENT}" action="#" th:action="@{/api/user/login}" method="get">
+                <div>
                     Delete
                 </div>
             </form>
