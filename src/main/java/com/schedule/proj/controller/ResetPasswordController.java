@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -16,7 +17,7 @@ import javax.naming.AuthenticationException;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
+@Controller
 public class ResetPasswordController {
 
 
@@ -45,8 +46,9 @@ public class ResetPasswordController {
 
     @Operation(summary = "send security test email")
     @GetMapping("/sendSecurityEmail")
-    public void sendSecurityEmail(@ModelAttribute("loginDTO") LoginDTO loginDTO) throws MessagingException {
+    public String sendSecurityEmail(@ModelAttribute("loginDTO") LoginDTO loginDTO) throws MessagingException {
         resetPasswordService.chekemail(loginDTO.getEmail());
+        return "redirect:/api/auth/login";
     }
 
 }
