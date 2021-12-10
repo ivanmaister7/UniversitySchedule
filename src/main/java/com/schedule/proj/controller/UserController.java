@@ -182,7 +182,7 @@ public class UserController {
         return "user-page-reset-password";
     }
 
-    //@Operation(summary = "change password")
+    @Operation(summary = "change password")
     @PostMapping("{id}/changePassword")
     public String changePassword(@PathVariable Long id,
                                  @ModelAttribute("passwordDTO") PasswordDTO dto,
@@ -196,6 +196,14 @@ public class UserController {
         } catch (RegistrationException | UsernameNotFoundException e) {
             return "user-page-reset-password";
         }
+    }
+
+    @PostMapping ("{id}/logout")
+    public String logout(HttpServletRequest request){
+        User u = userService.getUserByRequest(request);
+        CustomUserDetails user = CustomUserDetails.fromUserEntityToCustomUserDetails(u);
+        String message = authenticationService.logout(request, user);
+        return "redirect:/api/auth/login";
     }
 
 

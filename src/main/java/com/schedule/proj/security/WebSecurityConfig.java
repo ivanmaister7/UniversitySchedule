@@ -56,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 "/api/registration",
                 "/api/auth/login",
                 "/api/auth/reset",
-                "/api/auth/logout",
+                //"/api/auth/logout",
                 "/sendSecurityEmail"
 //                        "/api/student/UpdateStudent/",
 //                        "/api/teacher/UpdateTeacher/",

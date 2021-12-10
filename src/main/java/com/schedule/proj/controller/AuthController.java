@@ -74,13 +74,7 @@ public class AuthController {
         }
 
     }
-    @PostMapping("/logout")
-    public String logout(HttpServletRequest request){
-        User u = userService.getUserByRequest(request);
-        CustomUserDetails user = CustomUserDetails.fromUserEntityToCustomUserDetails(u);
-        String message = authenticationService.logout(request, user);
-        return "redirect:/api/auth/login";
-    }
+
 
     @PostMapping("/check")
     public ResponseEntity<?> checkTokenExpire(@RequestBody Map<String,String> request){
