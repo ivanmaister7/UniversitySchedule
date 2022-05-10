@@ -58,7 +58,6 @@ public class StudentService {
         User user = userRepository.findUserByEmail(email);
         if (user.getUserRole() == UserRole.STUDENT && user != null) {
             Student student = studentRepository.getByUserId(user.getId());
-            int i = 5;
             //user.setFirstName(dto.getFirstname());
             //user.setLastName(dto.getLastname());
             student.setStudentYear(dto.getStudentYear());
